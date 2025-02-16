@@ -1,3 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family: 'MinhaFonte';
+    src: url('/fonts/Chillax-Light.otf') format('otf'),
+        url('/fonts/Chillax-Regular.otf') format('otf'),
+        url('/fonts/Chillax-Semibold.otf') format('otf');
+    font-weight: normal;
+    font-style: normal;
+}

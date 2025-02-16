@@ -9,8 +9,16 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        primary: {
+          black: '#282828',
+          red: "#741D2D",
+        },
+        complementary: {
+          white: '#E7E3E0',
+        },
+      },
+      fontFamily: {
+        chillax: ['Chillax', 'sans-serif'],
       },
     },
   },
