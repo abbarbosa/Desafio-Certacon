@@ -1,16 +1,15 @@
 'use client'
 
 type TittleProps = {
-    styles?: string,
     children: React.ReactNode,
     className?:string
 }
 
 
-export const Title: React.FC<TittleProps> = ({ children, styles }) => {
+export const Title: React.FC<TittleProps> = ({ children, className }) => {
     return (
         <div>
-            <h1 className={`font-chillax text-[48px] ${styles}`}>{children}</h1>
+            <h1 className={`font-chillax text-[48px] ${className}`}>{children}</h1>
         </div>
     )
 }

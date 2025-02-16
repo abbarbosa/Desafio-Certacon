@@ -8,7 +8,9 @@ export default function Home() {
 
 
   return (
-    <div className="bg-primary-black h-screen flex items-center flex-col justify-center gap-[100px]"
+    <div
+    //passando estilizações pelo tailwind e pelo style para adicionar imagem de fundo.
+      className="bg-primary-black h-screen flex items-center flex-col justify-center gap-[100px]"
       style={{ backgroundImage: `url(${fundo.src})`, backgroundSize: "cover", backgroundPosition: "center" }}
     >
       <Logo className="h-[77px] w-[334px]" />
@@ -36,7 +38,7 @@ export default function Home() {
 
       </form>
       <div className="flex">
-        <StandartTittle styles="font-regular">Não tem uma conta?</StandartTittle><Link href={"/cadastro"}><ButtonLink>Crie uma!</ButtonLink></Link>
+        <StandartTittle className="font-regular">Não tem uma conta?</StandartTittle><Link href={"/cadastro"}><ButtonLink>Crie uma!</ButtonLink></Link>
       </div>
     </div>
   );

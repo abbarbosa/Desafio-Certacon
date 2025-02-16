@@ -1,15 +1,20 @@
 'use client'
-import Lottie from "lottie-react";
-import chevronAnimation from "../../Assets/icons/chevron-right.json"
 
+import Lottie from "lottie-react"; //import da biblioteca de animação
+import chevronAnimation from "../../Assets/icons/chevron-right.json" //import da animação
+
+
+// Usado para definir as propriedades dos botões
 type ButtonProps = {
     children: React.ReactNode;
 }
 
+//Passa o React.FC para tipar as propriedades
+//passa o children como propriedade 
 export const Button: React.FC<ButtonProps> = ({ children }) => {
     return (
         <div>
-            <button className={` bg-primary-red w-[510px] h-[73px] rounded-[30px] flex items-center justify-center gap-[5px] text-complementary-white text-[24px] hover:bg-[#4d1e27] font-chillax`}
+            <button className=' bg-primary-red w-[510px] h-[73px] rounded-[30px] flex items-center justify-center gap-[5px] text-complementary-white text-[24px] hover:bg-[#4d1e27] font-chillax'
             >
                 {children}
                 <div className="rounded-full w-[32px] h-[32px] border-complementary-white border flex items-center justify-center">
