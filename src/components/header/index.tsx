@@ -3,7 +3,7 @@ import Link from "next/link"
 import Logo from "../../Assets/logo/logo.svg"
 import { StandartTittle } from "../tittles/Index"
 import { usePathname } from "next/navigation";
-import { CircleButton } from "../button";
+import { ExtraButton } from "../button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDoorOpen, faUser } from "@fortawesome/free-solid-svg-icons";
 
@@ -17,7 +17,7 @@ export default function Header() {
     const linkStyle = (path: string) => (
         path === pathname
             //se estiver vai ter essa estilização
-            ? 'font-chillax text-[24px] text-[#282829] bg-[#E7E3E0] px-10 py-5 rounded-[30px]'
+            ? 'font-chillax text-[24px] text-[#282828] bg-[#E7E3E0] px-10 py-5 rounded-[30px]'
             //senão essa aqui
             : 'font-chillax text-[24px] text-[#E7E3E0] mx-10'
     );
@@ -38,7 +38,7 @@ export default function Header() {
                     // Link da rota 
                     href={'/produtos'}>
                     {/* chamando a verificação pelo className */}
-                    <StandartTittle className={linkStyle('/produtos')}>Produtos</StandartTittle>
+                    <StandartTittle className={`${linkStyle('/produtos')}`}>Produtos</StandartTittle>
                 </Link>
 
                 <Link
@@ -51,15 +51,15 @@ export default function Header() {
 
             <div className="flex gap-[10px]">
                 <Link href={'/perfil'}>
-                    <CircleButton>
+                    <ExtraButton>
                         <FontAwesomeIcon icon={faUser} className="text-complementary-white w-[25px] h-[25px]" />
-                    </CircleButton>
+                    </ExtraButton>
                 </Link>
 
                 <Link href={'/'}>
-                    <CircleButton>
+                    <ExtraButton>
                         <FontAwesomeIcon icon={faDoorOpen} className="text-complementary-white w-[25px] h-[25px]" />
-                    </CircleButton>
+                    </ExtraButton>
                 </Link>
 
             </div>

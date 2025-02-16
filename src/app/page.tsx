@@ -15,16 +15,16 @@ export default function Home() {
     >
       <Logo className="h-[77px] w-[334px]" />
 
-      <form className="flex flex-col gap-4" action={''}>
+      <form className="flex flex-col gap-4 text-complementary-white" action={''}>
         <input
-          className="w-[510px] h-[75px] rounded-[30px] font-chillax px-[10px]"
+          className="w-[510px] h-[75px] rounded-[30px] font-chillax pl-[10px] bg-transparent border border-complementary-white"
           type="text"
           required
           placeholder="Digite seu e-mail"
         />
 
         <input
-          className="w-[510px] h-[75px] rounded-[30px] font-chillax px-[10px]"
+          className="w-[510px] h-[75px] rounded-[30px] font-chillax pl-[10px] bg-transparent border border-complementary-white"
           type="password"
           required
           placeholder="Digite sua senha"

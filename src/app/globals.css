@@ -2,8 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* importando as fontes */
 @font-face {
-    font-family: 'MinhaFonte';
+    font-family: 'sans-serif';
     src: url('/fonts/Chillax-Light.otf') format('otf'),
         url('/fonts/Chillax-Regular.otf') format('otf'),
         url('/fonts/Chillax-Semibold.otf') format('otf');

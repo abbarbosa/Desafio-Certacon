@@ -9,14 +9,17 @@ export default {
   theme: {
     extend: {
       colors: {
+        //cores primárias
         primary: {
           black: '#282828',
           red: "#741D2D",
         },
+        //cores secundárias
         complementary: {
           white: '#E7E3E0',
         },
       },
+      //fonte padrão
       fontFamily: {
         chillax: ['Chillax', 'sans-serif'],
       },

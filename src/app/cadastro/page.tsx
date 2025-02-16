@@ -1,7 +1,6 @@
 import { Button, ButtonLink } from "@/components/button"
 import fundo from "../../Assets/bgLogin.png"
 import Logo from "../../Assets/logo/logo.svg"
-import { StandartTittle } from "@/components/tittles/Index"
 import Link from "next/link"
 
 
@@ -12,7 +11,7 @@ export default function Cadastro() {
         >
             <Logo className="h-[77px] w-[334px] " />
 
-            <form className="flex  gap-4 justify-center items-center font-chillax text-5" action={''}>
+            <form className="flex  gap-4 justify-center items-center text-complementary-white font-chillax text-5" action={''}>
 
                 <div className="flex items-center justify-center flex-col gap-5">
 
@@ -22,34 +21,34 @@ export default function Cadastro() {
                                 <input
                                     type="text"
                                     placeholder="Primeiro nome"
-                                    className="w-[245px] h-[75px] rounded-[30px] px-[10px]"
+                                    className="w-[245px] h-[75px] rounded-[30px] pl-[10px] bg-transparent border border-complementary-white"
                                     required
                                 />
 
                                 <input
                                     type="text"
                                     placeholder="Sobrenome"
-                                    className="w-[245px] h-[75px] rounded-[30px] px-[10px]"
+                                    className="w-[245px] h-[75px] rounded-[30px] pl-[10px] bg-transparent border border-complementary-white"
                                     required
                                 />
                             </div>
 
                             <div className=" flex gap-5 flex-col">
                                 <input
-                                    className="w-[510px] h-[75px] rounded-[30px] px-[10px]"
+                                    className="w-[510px] h-[75px] rounded-[30px] pl-[10px] bg-transparent border border-complementary-white"
                                     type="email"
                                     required
                                     placeholder="Digite seu e-mail"
                                 />
 
                                 <input
-                                    className="w-[510px] h-[75px] rounded-[30px] px-[10px]"
+                                    className="w-[510px] h-[75px] rounded-[30px] pl-[10px] bg-transparent border border-complementary-white"
                                     type="password"
                                     required
                                     placeholder="Digite sua senha"
                                 />
                                 <input
-                                    className="w-[510px] h-[75px] rounded-[30px] px-[10px]"
+                                    className="w-[510px] h-[75px] rounded-[30px] pl-[10px] bg-transparent border border-complementary-white"
                                     type="password"
                                     required
                                     placeholder="Confirme sua senha"
@@ -60,7 +59,7 @@ export default function Cadastro() {
                         <div className="flex items-center justify-center flex-col gap-5 ">
 
                             <input
-                                className="w-[510px] h-[75px] rounded-[30px] px-[10px]"
+                                className="w-[510px] h-[75px] rounded-[30px] pl-[10px] bg-transparent border border-complementary-white"
                                 type="text"
                                 required
                                 placeholder="Rua"
@@ -70,14 +69,14 @@ export default function Cadastro() {
                                 <input
                                     type="number"
                                     placeholder="N°"
-                                    className="w-[153px] h-[75px] rounded-[30px] px-[10px]"
+                                    className="w-[153px] h-[75px] rounded-[30px] pl-[10px] bg-transparent border border-complementary-white"
                                     required
                                 />
 
                                 <input
                                     type="text"
                                     placeholder="Cidade"
-                                    className="w-[337px] h-[75px] rounded-[30px] px-[10px]"
+                                    className="w-[337px] h-[75px] rounded-[30px] pl-[10px] bg-transparent border border-complementary-white"
                                     required
                                 />
                             </div>
@@ -85,14 +84,14 @@ export default function Cadastro() {
                             <input
                                 type="number"
                                 placeholder="CEP"
-                                className="w-[510px] h-[75px] rounded-[30px] px-[10px]"
+                                className="w-[510px] h-[75px] rounded-[30px] pl-[10px] bg-transparent border border-complementary-white"
                                 required
                             />
 
                             <input
                                 type="phone"
                                 placeholder="Telefone"
-                                className="w-[510px] h-[75px] rounded-[30px] px-[10px]"
+                                className="w-[510px] h-[75px] rounded-[30px] pl-[10px] bg-transparent border border-complementary-white"
                                 required
                             />
                         </div>
