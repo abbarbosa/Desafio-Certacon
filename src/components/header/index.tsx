@@ -1,7 +1,6 @@
 'use client';
 import React, { useState } from 'react';
 import Link from 'next/link';
-import Logo from '../../Assets/logo/logo.svg';
 import { StandartTittle } from '../tittles/Index';
 import { usePathname } from 'next/navigation';
 import { ExtraButton } from '../button';
@@ -26,7 +25,7 @@ export default function Header() {
         <header className='w-full bg-primary-black px-6 py-4 flex items-center justify-between'>
             
             <Link href={'/dashboard'}>
-                <img src="/logo.png" alt="" />
+                <img src="./logo.svg"  className='h-[37px] w-[157px]' alt="" />
             </Link>
 
             <button onClick={toggleMenu} className='md:hidden text-complementary-white'>

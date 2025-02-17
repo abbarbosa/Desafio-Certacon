@@ -22,19 +22,21 @@ export default function Perfil() {
     return (
         <div className=" bg-primary-black h-screen pl-[5%] flex items-start justify-start flex-col">
             {/* div do nome */}
-            <div className="flex flex-col sm:flex-row items-center justify-start gap-5 text-start">
+            <div className="flex flex-col  items-start justify-start gap-5 text-start">
                 <Title className="font-semibold text-complementary-white">João Silva</Title>
-                <StandartTittle className="text-complementary-white">joaosilva1_</StandartTittle>
-                <ExtraButton
-                    onClick={openModal}
-                    className="hover:scale-110 transition duration-300 rounded-full border-transparent"
-                >
-                    <Lottie
-                        animationData={chevronEdit}
-                        loop={true}
-                        style={{ width: 25, height: 25, filter: 'invert(100%) brightness(100%)' }}
-                    />
-                </ExtraButton>
+                <div>
+                    <StandartTittle className="text-complementary-white">joaosilva1_</StandartTittle>
+                    <ExtraButton
+                        onClick={openModal}
+                        className="hover:scale-110 transition duration-300 rounded-full border-transparent"
+                    >
+                        <Lottie
+                            animationData={chevronEdit}
+                            loop={true}
+                            style={{ width: 25, height: 25, filter: 'invert(100%) brightness(100%)' }}
+                        />
+                    </ExtraButton>
+                </div>
             </div>
 
 
@@ -64,7 +66,6 @@ export default function Perfil() {
                 </div>
             </div>
             <div className="items-start justify-center flex flex-col gap-[10px] mt-[70px]">
-                <ButtonLink onClick={openSecondModal}>Sair</ButtonLink>
                 <ButtonLink onClick={openSecondModal}>Encerrar conta</ButtonLink>
             </div>
 
