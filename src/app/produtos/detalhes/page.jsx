@@ -5,7 +5,6 @@ import { Button, ExtraButton } from "@/components/button"
 import Lottie from "lottie-react"
 import chevronAnimation from "../../../Assets/icons/chevron-right.json"
 import Link from "next/link"
-import fundo from "../../../Assets/image.png"
 
 export default function ProdutoDetalhado() {
     return (
@@ -31,10 +30,12 @@ export default function ProdutoDetalhado() {
             <div className="flex items-start justify-center gap-5 mt-10">
                 <div
                     className="rounded-[30px] w-[593px] h-[469px] flex"
-                    style={{ backgroundImage: `url(${fundo.src})`, backgroundSize: "cover", backgroundPosition: "center" }}
-                ></div>
+                >
+                    <img src={"./image.png"} className="rounded-[30px] w-[100%] h-[100%] flex" alt="" />
 
-                
+                </div>
+
+
 
 
                 <div className="flex items-start  flex-col gap-[10px]">

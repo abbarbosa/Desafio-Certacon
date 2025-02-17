@@ -22,6 +22,7 @@ export default function Produtos() {
     return (
         <div className="bg-primary-black h-screen">
             <div>
+               
                 <div className="w-[245px] h-[245px] rounded-[30px] bg-complementary-white mx-[20px]"
                     style={{ backgroundImage: `url(${fundo.src})`, backgroundSize: "cover", backgroundPosition: "center" }}
                 >
@@ -32,11 +33,10 @@ export default function Produtos() {
                     </div>
 
                     <div className="flex items-end justify-end pt-[100px] pr-[20px] gap-1">
-                        <ExtraButton onClick={openModal} className=" w-[44px] h-[44px] rounded-full bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-100"><FontAwesomeIcon icon={faPen} /></ExtraButton>
-                        <ExtraButton onClick={openSecondModal} className=" w-[44px] h-[44px] rounded-full bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-100"><FontAwesomeIcon icon={faTrash} /></ExtraButton>
+                        <ExtraButton onClick={openModal} className=" w-[44px] h-[44px] rounded-full bg-white-400 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-80"><FontAwesomeIcon icon={faPen} /></ExtraButton>
+                        <ExtraButton onClick={openSecondModal} className=" w-[44px] h-[44px] rounded-full bg-white-400 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-80"><FontAwesomeIcon icon={faTrash} /></ExtraButton>
                     </div>
 
-                    <img src={'./image.png'} className= "" alt="" />
 
                     <Modal isOpen={isModalOpen} onClose={closeModal}>
                         <div className="w-full h-full items-center justify-center flex ">
