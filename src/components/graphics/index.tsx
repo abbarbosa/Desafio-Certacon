@@ -12,7 +12,7 @@ export const BarGraphic = () => {
     ];
 
     return (
-        <div className="flex items-center justify-center flex-col font-chillax">
+        <div className="flex items-center justify-center flex-col ">
             <StandartTittle>Comparação de preços dos produtos</StandartTittle>
             <ResponsiveContainer width="100%" height={300}>
                 <BarChart data={data}>

@@ -9,7 +9,7 @@ type TittleProps = {
 export const Title: React.FC<TittleProps> = ({ children, className }) => {
     return (
         <div>
-            <h1 className={`font-chillax text-[48px] ${className}`}>{children}</h1>
+            <h1 className={` text-[48px] font-chillax ${className}`}>{children}</h1>
         </div>
     )
 }
@@ -17,7 +17,7 @@ export const Title: React.FC<TittleProps> = ({ children, className }) => {
 export const StandartTittle: React.FC<TittleProps> = ({ children, className }) => {
     return (
         <div>
-            <h2 className={`font-chillax text-[24px] text-complementary-white text-center ${className}`}>
+            <h2 className={` text-[24px] text-complementary-white text-center font-chillax ${className}`}>
                 {children}
             </h2>
         </div>

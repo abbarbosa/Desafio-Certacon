@@ -1,5 +1,4 @@
 import { Button, ButtonLink } from "@/components/button";
-import Logo from "../Assets/logo/logo.svg"
 import Link from "next/link";
 import { StandartTittle } from "@/components/tittles/Index";
 import fundo from "../Assets/bgLogin.png"
@@ -13,18 +12,18 @@ export default function Home() {
       className="bg-primary-black h-screen flex items-center flex-col justify-center gap-[100px]"
       style={{ backgroundImage: `url(${fundo.src})`, backgroundSize: "cover", backgroundPosition: "center" }}
     >
-      <Logo className="h-[77px] w-[70%] mt-[10%]" />
+      <img src="./logo.svg" alt="" />
 
       <form className="flex flex-col gap-4 text-complementary-white w-full max-w-[510px] mx-auto p-4" action={''}>
         <input
-          className="w-full h-[75px] rounded-[30px] font-chillax pl-[10px] bg-transparent border border-complementary-white focus:outline-none focus:border-primary-blue transition duration-300"
+          className="w-full h-[75px] rounded-[30px] pl-[10px] bg-transparent border border-complementary-white focus:outline-none focus:border-primary-blue transition duration-300"
           type="text"
           required
           placeholder="Digite seu e-mail"
         />
 
         <input
-          className="w-full h-[75px] rounded-[30px] font-chillax pl-[10px] bg-transparent border border-complementary-white focus:outline-none focus:border-primary-blue transition duration-300"
+          className="w-full h-[75px] rounded-[30px] pl-[10px] bg-transparent border border-complementary-white focus:outline-none focus:border-primary-blue transition duration-300"
           type="password"
           required
           placeholder="Digite sua senha"

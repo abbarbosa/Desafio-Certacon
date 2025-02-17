@@ -18,14 +18,15 @@ export default function Header() {
 
     const linkStyle = (path:string) => (
         path === pathname
-            ? 'font-chillax text-[24px] !text-[#282828] bg-[#E7E3E0] px-10 py-5 rounded-[30px]'
-            : 'font-chillax text-[24px] text-[#E7E3E0] mx-10'
+            ? ' text-[24px] !text-[#282828] bg-[#E7E3E0] px-10 py-5 rounded-[30px]'
+            : ' text-[24px] text-[#E7E3E0] mx-10'
     );
 
     return (
         <header className='w-full bg-primary-black px-6 py-4 flex items-center justify-between'>
+            
             <Link href={'/dashboard'}>
-                <Logo className='h-[37px] w-[157px]' />
+                <img src="/logo.png" alt="" />
             </Link>
 
             <button onClick={toggleMenu} className='md:hidden text-complementary-white'>
@@ -61,7 +62,7 @@ export default function Header() {
                         <button onClick={toggleMenu} className='absolute top-4 right-4 text-2xl'>
                             <FontAwesomeIcon icon={faTimes} />
                         </button>
-                        <nav className='flex flex-col gap-4 mt-10 text-[18px] text-center font-chillax'>
+                        <nav className='flex flex-col gap-4 mt-10 text-[18px] text-center '>
                             <Link href={'/produtos'} onClick={toggleMenu} className='hover:font-bold'>Produtos</Link>
                             <Link href={'/dashboard'} onClick={toggleMenu} className='hover:font-bold'>Dashboard</Link>
                             <Link href={'/perfil'} onClick={toggleMenu} className='hover:font-bold'>Perfil</Link>

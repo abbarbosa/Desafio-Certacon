@@ -1,6 +1,5 @@
 import { Button, ButtonLink } from "@/components/button"
 import fundo from "../../Assets/bgLogin.png"
-import Logo from "../../Assets/logo/logo.svg"
 import Link from "next/link"
 
 export default function Cadastro() {
@@ -10,9 +9,10 @@ export default function Cadastro() {
             style={{ backgroundImage: `url(${fundo.src})`, backgroundSize: "cover", backgroundPosition: "center" }}
         >
             <div className="w-full max-w-[800px] bg-opacity-70 rounded-[30px] p-8 backdrop-blur-md">
-                <Logo className="h-[77px] w-full mb-8 mx-auto" />
 
-                <form className="flex flex-col gap-5 w-full text-complementary-white font-chillax text-[20px]">
+                <img src="./logo.svg" className="h-[77px] w-full mb-8 mx-auto" alt="" />
+
+                <form className="flex flex-col gap-5 w-full text-complementary-white text-[20px]">
 
                     <div className="flex flex-col md:flex-row gap-5 w-full">
                         <input

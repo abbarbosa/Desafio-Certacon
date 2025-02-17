@@ -42,21 +42,21 @@ export default function Produtos() {
                         <div className="w-full h-full items-center justify-center flex ">
                             <form className="flex-col gap-4 text-complementary-white items-center justify-center flex" action={''}>
                                 <input
-                                    className="w-[510px] h-[75px] rounded-[30px] font-chillax pl-[10px] bg-transparent border border-complementary-white"
+                                    className="w-[510px] h-[75px] rounded-[30px]  pl-[10px] bg-transparent border border-complementary-white"
                                     type="text"
                                     required
                                     placeholder="Nome do produto"
                                 />
 
                                 <input
-                                    className="w-[510px] h-[75px] rounded-[30px] font-chillax pl-[10px] bg-transparent border border-complementary-white"
+                                    className="w-[510px] h-[75px] rounded-[30px]  pl-[10px] bg-transparent border border-complementary-white"
                                     type="number"
                                     required
                                     placeholder="Preço"
                                 />
 
                                 <input
-                                    className="w-[510px] h-[260px] rounded-[30px] font-chillax pl-[10px] bg-transparent border border-complementary-white"
+                                    className="w-[510px] h-[260px] rounded-[30px]  pl-[10px] bg-transparent border border-complementary-white"
                                     type="text"
                                     required
                                     placeholder="Descrição"

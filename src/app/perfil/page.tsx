@@ -20,7 +20,7 @@ export default function Perfil() {
     const closeSecondModal = () => setIsSecondModal(false)
 
     return (
-        <div className="bg-primary-black h-full pl-[5%] pt-[80px]  items-start justify-start flex-col">
+        <div className=" bg-primary-black h-screen pl-[5%] flex items-start justify-start flex-col">
             {/* div do nome */}
             <div className="flex flex-col sm:flex-row items-center justify-start gap-5 text-start">
                 <Title className="font-semibold text-complementary-white">João Silva</Title>
@@ -71,7 +71,7 @@ export default function Perfil() {
             {/* Modal edição */}
             <Modal isOpen={isModalOpen} onClose={closeModal}>
                 <div className="flex justify-center h-full">
-                    <form className="flex flex-col gap-5 w-full text-complementary-white font-chillax text-[20px] max-h-[80vh] overflow-y-auto">
+                    <form className="flex flex-col gap-5 w-full text-complementary-white text-[20px] max-h-[80vh] overflow-y-auto">
                         <div className="flex flex-col md:flex-row gap-5 w-full">
                             <input
                                 type="text"
