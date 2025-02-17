@@ -12,9 +12,12 @@ import Link from "next/link";
 
 export default function Perfil() {
     const [isModalOpen, setIsModalOpen] = useState(false);
-
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
+
+    const [isSecondModal, setIsSecondModal] = useState(false)
+    const openSecondModal = () => setIsSecondModal(true)
+    const closeSecondModal = () => setIsSecondModal(false)
 
     return (
         <div className="bg-primary-black h-screen pl-[120px] pt-[80px]  items-center justify-center flex-col">
@@ -59,7 +62,7 @@ export default function Perfil() {
                 </div>
             </div>
 
-            <ButtonLink className="mt-[70px]">Encerrar conta</ButtonLink>
+            <ButtonLink onClick={openSecondModal} className="mt-[70px]">Encerrar conta</ButtonLink>
 
             {/* Modal edição */}
             <Modal isOpen={isModalOpen} onClose={closeModal}>
@@ -148,6 +151,16 @@ export default function Perfil() {
                             </div>
                         </div>
                     </form>
+                </div>
+            </Modal>
+
+            <Modal isOpen={isSecondModal} onClose={closeSecondModal}>
+                <div className="flex flex-col items-center justify-center h-full gap-5">
+                    <Title className="text-complementary-white"><strong>Deletar conta?</strong></Title>
+                    <Link href={'/'}>
+                        <Button>Confirmar</Button>
+                    </Link>
+                    <ButtonLink onClick={closeSecondModal}>Cancelar</ButtonLink>
                 </div>
             </Modal>
 
