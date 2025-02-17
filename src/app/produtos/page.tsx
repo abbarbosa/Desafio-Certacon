@@ -7,7 +7,6 @@ import { useState } from "react";
 import { Modal } from "@/components/modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
-
 export default function Produtos() {
 
     //para abrir segundo modal
@@ -37,7 +36,7 @@ export default function Produtos() {
                         <ExtraButton onClick={openSecondModal} className=" w-[44px] h-[44px] rounded-full bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-100"><FontAwesomeIcon icon={faTrash} /></ExtraButton>
                     </div>
 
-                    
+                    <img src={'./image.png'} className= "" alt="" />
 
                     <Modal isOpen={isModalOpen} onClose={closeModal}>
                         <div className="w-full h-full items-center justify-center flex ">

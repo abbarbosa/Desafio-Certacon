@@ -34,6 +34,9 @@ export default function ProdutoDetalhado() {
                     style={{ backgroundImage: `url(${fundo.src})`, backgroundSize: "cover", backgroundPosition: "center" }}
                 ></div>
 
+                
+
+
                 <div className="flex items-start  flex-col gap-[10px]">
                     <Title className="text-complementary-white">Iphone 11</Title>
                     <StandartTittle className="w-[410px] h-[160px] text-start">lorem ipsum dolor sit amet lorem ipsum dolor sit amet</StandartTittle>
