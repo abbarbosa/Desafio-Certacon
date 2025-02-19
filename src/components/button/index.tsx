@@ -3,7 +3,7 @@
 import Lottie from "lottie-react";
 import chevronAnimation from "../../Assets/icons/chevron-right.json"
 // Usado para definir as propriedades dos botões
-type ButtonProps = {
+type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
     children?: React.ReactNode;
     onClick?: React.MouseEventHandler<HTMLButtonElement>;
     className?:string

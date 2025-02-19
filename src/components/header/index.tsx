@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { StandartTittle } from '../tittles/Index';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { ExtraButton } from '../button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDoorOpen, faUser, faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -10,22 +10,28 @@ import { faDoorOpen, faUser, faBars, faTimes } from '@fortawesome/free-solid-svg
 export default function Header() {
     const pathname = usePathname();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const router = useRouter();
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
 
-    const linkStyle = (path:string) => (
+    const linkStyle = (path: string) => (
         path === pathname
             ? ' text-[24px] !text-[#282828] bg-[#E7E3E0] px-10 py-5 rounded-[30px]'
             : ' text-[24px] text-[#E7E3E0] mx-10'
     );
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        router.push("/");
+    };
+
 
     return (
         <header className='w-full bg-primary-black px-6 py-4 flex items-center justify-between'>
-            
+
             <Link href={'/dashboard'}>
-                <img src="./logo.svg"  className='h-[37px] w-[157px]' alt="" />
+                <img src="./logo.svg" className='h-[37px] w-[157px]' alt="" />
             </Link>
 
             <button onClick={toggleMenu} className='md:hidden text-complementary-white'>
@@ -42,16 +48,10 @@ export default function Header() {
             </nav>
 
             <div className='hidden md:flex gap-[10px]'>
-                <Link href={'/perfil'}>
-                    <ExtraButton>
-                        <FontAwesomeIcon icon={faUser} className='text-complementary-white w-[25px] h-[25px]' />
-                    </ExtraButton>
-                </Link>
-                <Link href={'/'}>
-                    <ExtraButton>
-                        <FontAwesomeIcon icon={faDoorOpen} className='text-complementary-white w-[25px] h-[25px]' />
-                    </ExtraButton>
-                </Link>
+                <ExtraButton onClick={handleLogout}>
+                    <FontAwesomeIcon icon={faDoorOpen} className='text-complementary-white w-[25px] h-[25px]' />
+                </ExtraButton>
+
             </div>
 
             {isMenuOpen && (
@@ -64,7 +64,6 @@ export default function Header() {
                         <nav className='flex flex-col gap-4 mt-10 text-[18px] text-center '>
                             <Link href={'/produtos'} onClick={toggleMenu} className='hover:font-bold'>Produtos</Link>
                             <Link href={'/dashboard'} onClick={toggleMenu} className='hover:font-bold'>Dashboard</Link>
-                            <Link href={'/perfil'} onClick={toggleMenu} className='hover:font-bold'>Perfil</Link>
                         </nav>
                     </div>
                 </div>

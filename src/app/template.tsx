@@ -13,7 +13,8 @@ export default function Template({ children }: { children: React.ReactNode }) {
 
     return <div>
         {/* Páginas sem header inclui pathame e tira o header */}
-        {!NoHeaderPages.includes(Pathame) && <Header />}
-        {children}</div>
+        
+            {!NoHeaderPages.includes(Pathame) && <Header />}
+            {children}</div>
 }
 

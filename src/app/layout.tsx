@@ -1,4 +1,5 @@
 import "./globals.css";
+import { Provider } from "react-redux";
 
 export default function RootLayout({
   children,
@@ -6,16 +7,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
 
- 
+
   return (
     <html lang="en">
       <body
         className="vsc-initialized"
       >
-        
 
-        {/*conteúdo das páginas */}
-        {children}
+        {/* <Provider store={store}> */}
+          {/*conteúdo das páginas */}
+          {children}
+        {/* </Provider> */}
 
       </body>
     </html>

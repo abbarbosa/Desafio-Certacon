@@ -1,0 +1,205 @@
+'use client'
+
+import { useState, useEffect } from "react";
+import { StandartTittle, Title } from "@/components/tittles/Index";
+import { Button, ButtonLink, ExtraButton } from "@/components/button";
+import Lottie from "lottie-react";
+import chevronAnimation from "../../../Assets/icons/chevron-right.json";
+import Link from "next/link";
+import { Modal } from "@/components/modal";
+import { useParams, useRouter } from "next/navigation";
+
+export default function ProdutoDetalhado({ params }: { params: { id: string } }) {
+    const { id } = useParams();
+    const [product, setProduct] = useState<any | null>(null);
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isSecondModal, setIsSecondModal] = useState(false);
+
+    const openModal = () => setIsModalOpen(true);
+    const closeModal = () => setIsModalOpen(false);
+
+    const openSecondModal = () => setIsSecondModal(true);
+    const closeSecondModal = () => setIsSecondModal(false);
+
+    const [products, setProducts] = useState<any[]>([]);
+    const [productToDelete, setProductToDelete] = useState<any | null>(null);
+
+    const [productToEdit, setProductToEdit] = useState<any | null>(null);
+    const [productName, setProductName] = useState("");
+    const [productPrice, setProductPrice] = useState("");
+    const [productDescription, setProductDescription] = useState("");
+    const [productImage, setProductImage] = useState("");
+    const [productImageFile, setProductImageFile] = useState<File | null>(null);
+    const [productCategory, setProductCategory] = useState("electronic");
+    const [productImagePreview, setProductImagePreview] = useState<string | null>(null);
+
+    const [categories, setCategories] = useState<string[]>([]);
+
+    useEffect(() => {
+        // Buscar categorias da API
+        const fetchCategories = async () => {
+            try {
+                const response = await fetch("https://fakestoreapi.com/products/categories");
+                const data = await response.json();
+                setCategories(data);
+            } catch (error) {
+                console.error("Erro ao buscar categorias:", error);
+            }
+        };
+
+        fetchCategories();
+    }, []);
+
+    useEffect(() => {
+        const fetchParams = async () => {
+            if (!params) return;
+
+            const { id } = await params;
+
+            if (!id) return;
+
+            // Pega os produtos armazenados no localStorage
+            const storedProducts = localStorage.getItem("products");
+            if (storedProducts) {
+                const products = JSON.parse(storedProducts);
+                const foundProduct = products.find((p: any) => p.id === Number(id));
+                setProduct(foundProduct);
+            }
+        };
+
+        fetchParams();
+    }, [params]);
+
+    if (!id) {
+        return <p>Produto não encontrado...</p>;
+    }
+
+    if (!product) {
+        return (
+            <div className="flex flex-col items-center justify-center h-screen text-white">
+                <Title>Produto não encontrado!</Title>
+            </div>
+        );
+    }
+
+    const handleDeleteProduct = async () => {
+        if (!product) return;
+
+        // Pega os produtos armazenados no localStorage
+        const storedProducts = localStorage.getItem("products");
+        if (storedProducts) {
+            const products = JSON.parse(storedProducts);
+
+            // Filtra os produtos, removendo o que tem o mesmo id
+            const updatedProducts = products.filter((p: any) => p.id !== product.id);
+
+            // Salva os produtos atualizados de volta no localStorage
+            saveProducts(updatedProducts);
+
+            // Fecha o modal de exclusão
+            closeSecondModal();
+
+            // Redireciona para a página de produtos após a exclusão
+            window.location.href = '/produtos';
+        }
+    };
+
+
+
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            setProductImageFile(file);
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setProductImagePreview(reader.result as string);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    const saveProducts = (updatedProducts: any[]) => {
+        localStorage.setItem("products", JSON.stringify(updatedProducts));
+    };
+
+    return (
+        <div className="h-[100%] w-full bg-primary-black flex flex-col items-start pl-[2%] pt-[5%] gap-5">
+            <div className="items-center flex flex-col lg:flex-row justify-center gap-2 lg:gap-5 text-center lg:text-left">
+                <div className="flex items-center justify-center gap-2 lg:gap-5">
+                    <Link href="/produtos">
+                        <ExtraButton className="transition-transform duration-300 transform rotate-180">
+                            <Lottie
+                                animationData={chevronAnimation}
+                                loop={false}
+                                style={{ width: 25, height: 25 }}
+                            />
+                        </ExtraButton>
+                    </Link>
+
+                    <Link href="/produtos">
+                        <Title className="text-complementary-white text-[30px] lg:text-[36px]">Produtos</Title>
+                    </Link>
+                </div>
+
+                <Title className="text-complementary-white text-[30px] lg:text-[36px]"> / {product.title} </Title>
+            </div>
+
+            <div className="flex flex-col lg:flex-row items-start justify-center gap-5 mt-10">
+                <div className="rounded-[30px] w-full lg:w-[593px] h-[300px] lg:h-[469px] flex">
+                    <img
+                        src={product.image}
+                        className="rounded-[30px] w-full h-full object-cover"
+                        alt={product.title}
+                    />
+                </div>
+
+                <div className="flex items-start flex-col gap-[10px] text-center lg:text-start">
+                    <Title className="text-complementary-white">{product.title}</Title>
+                    <StandartTittle className="w-full lg:w-[410px] h-auto lg:h-[160px] text-start">
+                        {product.description}
+                    </StandartTittle>
+                    <StandartTittle className="w-full font-semibold text-10 text-start">
+                        {product.price}
+                    </StandartTittle>
+
+                    <div className="flex flex-col gap-5  mb-[10px]">
+
+                        <ButtonLink
+                            className=" h-[70px] text-5"
+                            onClick={openSecondModal}
+                        >
+                            Excluir produto
+                        </ButtonLink>
+                    </div>
+                </div>
+            </div>
+
+
+            {/* Modal para excluir produto */}
+            <Modal isOpen={isSecondModal} onClose={closeSecondModal}>
+                <div className="flex items-center justify-center h-full w-full p-5">
+                    <div className="flex flex-col items-center justify-center gap-5 w-full max-w-[400px]">
+                        <Title className="text-complementary-white text-center text-lg md:text-2xl">
+                            <strong>Deletar produto?</strong>
+                        </Title>
+                        <div className="flex flex-col items-center gap-4 w-full">
+                            <Button
+                                className="w-[200px] h-[60px] text-lg"
+                                onClick={handleDeleteProduct}
+                            >
+                                Confirmar
+                            </Button>
+                            <ButtonLink
+                                className="w-[200px] h-[60px] text-lg"
+                                onClick={closeSecondModal}
+                            >
+                                Cancelar
+                            </ButtonLink>
+                        </div>
+                    </div>
+                </div>
+            </Modal>
+        </div>
+    );
+}
