@@ -111,7 +111,7 @@ export const BarGraphic = () => {
             cx="50%"
             cy="50%"
             outerRadius={100}
-            labelLine={false} // Remove as linhas de rótulos
+            labelLine={false} 
         >
             {data.map((entry, index) => (
                 <Cell
