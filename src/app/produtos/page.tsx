@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import CustomAlert from "@/components/alerts";
+import { toast } from "react-toastify";
 
 
 //interface com dados do produto
@@ -47,9 +47,9 @@ export default function Produtos() {
     const [productImagePreview, setProductImagePreview] = useState<string | null>(null);
     const [productToEdit, setProductToEdit] = useState<any | null>(null);
     const [categories, setCategories] = useState<string[]>([]);
-    const [selectedCategory, setSelectedCategory] = useState<string>(""); 
+    const [selectedCategory, setSelectedCategory] = useState<string>("");
 
-    
+
 
     // Redireciona para login se não houver token
     useEffect(() => {
@@ -100,39 +100,54 @@ export default function Produtos() {
     const handleAddProduct = (e: React.FormEvent) => {
         e.preventDefault();
 
-        const newProduct: ProductProps = {
-            id: new Date().getTime(),
-            title: productName,
-            price: parseFloat(productPrice),
-            description: productDescription,
-            image: productImagePreview || fundo.src,
-            category: productCategory,
-        };
+        try {
+            const newProduct: ProductProps = {
+                id: new Date().getTime(),
+                title: productName,
+                price: parseFloat(productPrice),
+                description: productDescription,
+                image: productImagePreview || fundo.src,
+                category: productCategory,
+            };
 
-        const updatedProducts: ProductProps[] = [...products, newProduct];
-        setProducts(updatedProducts);
-        saveProducts(updatedProducts);
+            const updatedProducts: ProductProps[] = [...products, newProduct];
+            setProducts(updatedProducts);
+            saveProducts(updatedProducts);
 
+            setProductName('');
+            setProductPrice('');
+            setProductDescription('');
+            setProductImageFile(null);
+            setProductImagePreview(null);
+            setProductCategory('electronic');
+            closeModalAdd();
 
-        setProductName('');
-        setProductPrice('');
-        setProductDescription('');
-        setProductImageFile(null);
-        setProductImagePreview(null);
-        setProductCategory('electronic');
-        closeModalAdd();
-        <CustomAlert severity="success" message="Sucesso! Produto adicionado." />
+            toast.success("Produto adicionado com sucesso!");
+
+        } catch (error: any) {
+            toast.error("Erro ao adicionar produto. Tente novamente.");
+        }
     };
+
 
     //função para deletar produto
     const handleDeleteProduct = async () => {
         if (!productToDelete) return;
 
-        const updatedProducts = products.filter((product) => product.id !== productToDelete.id);
-        setProducts(updatedProducts);
-        saveProducts(updatedProducts);
-        closeSecondModal();
+        try {
+            const updatedProducts = products.filter((product) => product.id !== productToDelete.id);
+            setProducts(updatedProducts);
+            saveProducts(updatedProducts);
+            closeSecondModal();
+
+            // Exibindo o toast de sucesso
+            toast.success("Produto deletado com sucesso!");
+        } catch (error) {
+            // Exibindo o toast de erro
+            toast.error("Erro ao deletar o produto. Tente novamente.");
+        }
     };
+
 
     //função para atualizar produto
     const handleUpdateProduct = (e: React.FormEvent) => {
@@ -140,31 +155,36 @@ export default function Produtos() {
 
         if (!productToEdit) return;
 
-        const updatedProduct = {
-            ...productToEdit,
-            title: productName,
-            price: parseFloat(productPrice),
-            description: productDescription,
-            image: productImagePreview || productToEdit.image,
-            category: productCategory,
-        };
+        try {
+            const updatedProduct = {
+                ...productToEdit,
+                title: productName,
+                price: parseFloat(productPrice),
+                description: productDescription,
+                image: productImagePreview || productToEdit.image,
+                category: productCategory,
+            };
 
-        const updatedProducts = products.map((product) =>
-            product.id === productToEdit.id ? updatedProduct : product
-        );
-        setProducts(updatedProducts);
-        saveProducts(updatedProducts);
+            const updatedProducts = products.map((product) =>
+                product.id === productToEdit.id ? updatedProduct : product
+            );
+            setProducts(updatedProducts);
+            saveProducts(updatedProducts);
 
+            setProductName('');
+            setProductPrice('');
+            setProductDescription('');
+            setProductImageFile(null);
+            setProductImagePreview(null);
+            setProductCategory('electronic');
+            closeUpdateModal();
 
-        setProductName('');
-        setProductPrice('');
-        setProductDescription('');
-        setProductImageFile(null);
-        setProductImagePreview(null);
-        setProductCategory('electronic');
-        closeUpdateModal();
-        <CustomAlert severity="success" message="Sucesso! Produto atualizado." />
+            toast.success("Produto atualizado com sucesso!");
+        } catch (error: any) {
+            toast.error("Erro ao atualizar produto. Tente novamente.");
+        }
     };
+
 
     const handleOpenUpdateModal = (product: any) => {
         setProductToEdit(product);
@@ -299,12 +319,12 @@ export default function Produtos() {
                             onChange={handleImageChange}
                         />
 
-                        {/* Campo de seleção de categoria */}
                         <select
-                            className="w-full h-[50px] rounded-[30px] pl-[10px] bg-primary-black border border-complementary-white text-complementary-white "
-                            value={productCategory}
-                            onChange={(e) => setProductCategory(e.target.value)}
+                            className="w-full h-[50px] rounded-[30px] pl-[10px] bg-primary-black border border-complementary-white text-complementary-white"
+                            value={selectedCategory}
+                            onChange={(e) => setSelectedCategory(e.target.value)}
                         >
+                            <option value="">Selecione uma categoria</option> {/* Adicionando a opção padrão */}
                             {categories.length > 0 ? (
                                 categories.map((category) => (
                                     <option key={category} value={category}>
@@ -315,6 +335,7 @@ export default function Produtos() {
                                 <option>Carregando...</option>
                             )}
                         </select>
+
                         <Button type="submit">Salvar</Button>
                     </form>
                     <ButtonLink onClick={closeModalAdd} >Cancelar</ButtonLink>
@@ -380,12 +401,12 @@ export default function Produtos() {
                             onChange={handleImageChange}
                         />
 
-                        {/* Campo de seleção de categoria */}
                         <select
-                            className="w-full h-[50px] rounded-[30px] pl-[10px] bg-primary-black border border-complementary-white text-complementary-white "
-                            value={productCategory}
-                            onChange={(e) => setProductCategory(e.target.value)}
+                            className="w-full h-[50px] rounded-[30px] pl-[10px] bg-primary-black border border-complementary-white text-complementary-white"
+                            value={selectedCategory}
+                            onChange={(e) => setSelectedCategory(e.target.value)}
                         >
+                            <option value="">Selecione uma categoria</option> {/* Adicionando a opção padrão */}
                             {categories.length > 0 ? (
                                 categories.map((category) => (
                                     <option key={category} value={category}>
@@ -396,6 +417,7 @@ export default function Produtos() {
                                 <option>Carregando...</option>
                             )}
                         </select>
+
 
                         <Button className="flex justify-center items-center w-full" type="submit">Salvar</Button>
                     </form>

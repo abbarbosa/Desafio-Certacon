@@ -62,7 +62,7 @@ export const BarGraphic = () => {
             </ResponsiveContainer>
 
             <StandartTittle>Produtos por categoria</StandartTittle>
-            <ResponsiveContainer width="100%" height={300}>
+            <ResponsiveContainer width="80%" height={300}>
                 <PieChart>
                     <Pie data={data} dataKey="valor" nameKey="name" cx="50%" cy="50%" outerRadius={100}>
                         {data.map((entry, index) => (

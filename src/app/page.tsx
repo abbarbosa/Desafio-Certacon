@@ -5,61 +5,70 @@ import Link from "next/link";
 import fundo from "../Assets/bgLogin.png";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { StandartTittle } from "@/components/tittles/Index";
 
-export default function Home() {
+export default function App() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
 
-
-  //verificação se está logado
+  // Verificação se já está logado
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (token) {
+
+    // Verifica se o token é válido antes de redirecionar
+    if (token && token !== "undefined" && token !== "null") {
       router.push("/dashboard");
     }
   }, [router]);
 
-  //função de login
+  // Função de login
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError(''); 
+
+    const storedUserData = JSON.parse(localStorage.getItem("userData") || '{}');
+
+    if (!username || !password) {
+      toast.error("Preencha todos os campos");
+      return;
+    }
+    if (username !== storedUserData.username || password !== storedUserData.password) {
+      toast.error("Usuário ou senha incorretos");
+      return;
+    }
+
+    setIsLoading(true);
 
     try {
-      const response = await fetch('https://fakestoreapi.com/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username: "mor_2314",
-          password: "83r5^_" 
-        })
-      })
-        .then(res => res.json())
-        .then(json => {
-          console.log(json);
-          if (json.token) {
-            localStorage.setItem("token", json.token);
-            localStorage.setItem("name", json.name);
-            router.push("/dashboard"); 
-          }
-        })
+      const mockToken = "mock_token_example";
 
-        .catch(error => console.error('Erro:', error)); 
+      if (!mockToken) {
+        throw new Error("Erro ao obter token, tente novamente.");
+      }
+
+
+      localStorage.setItem("token", mockToken);
+
+      toast.success("Login realizado com sucesso!");
+      router.push("/dashboard");
     } catch (error: any) {
-      setError(error.message); 
+      toast.error(error.message || "Erro ao fazer login");
+    } finally {
+      setIsLoading(false); 
     }
   };
 
   return (
     <div
-      className="bg-primary-black h-screen flex items-center flex-col justify-center gap-[100px]"
+      className="bg-primary-black min-h-screen flex items-center flex-col justify-center gap-[100px]"
       style={{ backgroundImage: `url(${fundo.src})`, backgroundSize: "cover", backgroundPosition: "center" }}
     >
+      <ToastContainer />
+
       <img src="./logo.svg" className="h-[77px] w-full mb-8 mx-auto" alt="Logo" />
 
       <form
@@ -72,7 +81,7 @@ export default function Home() {
           className="w-full h-[75px] rounded-[30px] pl-[10px] bg-transparent border border-complementary-white focus:outline-none focus:border-primary-blue transition duration-300"
           type="text"
           required
-          placeholder="Digite seu user"
+          placeholder="Digite seu username"
         />
 
         <input
@@ -84,19 +93,20 @@ export default function Home() {
           placeholder="Digite sua senha"
         />
 
-        <Button type="submit" className="w-full rounded-[30px]">
-          Entrar
+        <Button type="submit" disabled={isLoading}>
+          {isLoading ? "Entrando..." : "Entrar"}
         </Button>
       </form>
 
-
-      <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 text-center">
-        <StandartTittle className="font-regular text-5">Não tem uma conta? </StandartTittle>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-center gap-1 sm:gap-2 text-center mb-[10px]">
+        <StandartTittle>
+          Não tem uma conta?
+        </StandartTittle>
+        <span className="font-regular text-5"> </span>
         <Link href={"/cadastro"}>
           <ButtonLink className="text-5">Crie uma!</ButtonLink>
         </Link>
       </div>
     </div>
-
   );
 }

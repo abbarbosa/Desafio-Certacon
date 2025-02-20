@@ -10,6 +10,7 @@ import { Modal } from "@/components/modal";
 import { useParams, useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { toast } from "react-toastify";
 
 export default function ProdutoDetalhado({ params }: { params: { id: string } }) {
     const { id } = useParams();
@@ -64,38 +65,32 @@ export default function ProdutoDetalhado({ params }: { params: { id: string } })
     const handleDeleteProduct = async () => {
         if (!product) return;
 
-        // Pega os produtos armazenados no localStorage
-        const storedProducts = localStorage.getItem("products");
-        if (storedProducts) {
-            const products = JSON.parse(storedProducts);
+        try {
+            // Pega os produtos armazenados no localStorage
+            const storedProducts = localStorage.getItem("products");
+            if (storedProducts) {
+                const products = JSON.parse(storedProducts);
 
-            // Filtra os produtos, removendo o que tem o mesmo id
-            const updatedProducts = products.filter((p: any) => p.id !== product.id);
 
-            // Salva os produtos atualizados de volta no localStorage
-            saveProducts(updatedProducts);
+                const updatedProducts = products.filter((p: any) => p.id !== product.id);
 
-            // Fecha o modal de exclusão
-            closeSecondModal();
+                saveProducts(updatedProducts);
 
-            // Redireciona para a página de produtos após a exclusão
-            window.location.href = '/produtos';
+                closeSecondModal();
+
+                toast.success("Produto deletado com sucesso!");
+
+                setTimeout(() => {
+                    window.location.href = '/produtos';
+                }, 1000);
+            }
+
+        } catch (error) {
+            toast.error("Erro ao deletar o produto. Tente novamente.");
         }
     };
 
 
-
-    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (file) {
-            setProductImageFile(file);
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setProductImagePreview(reader.result as string);
-            };
-            reader.readAsDataURL(file);
-        }
-    };
 
     const saveProducts = (updatedProducts: any[]) => {
         localStorage.setItem("products", JSON.stringify(updatedProducts));

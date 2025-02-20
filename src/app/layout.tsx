@@ -1,5 +1,5 @@
+import { ToastContainer } from "react-toastify";
 import "./globals.css";
-import { Provider } from "react-redux";
 
 export default function RootLayout({
   children,
@@ -13,7 +13,8 @@ export default function RootLayout({
       <body
         className="vsc-initialized"
       >
-          {children}
+        <ToastContainer />
+        {children}
 
       </body>
     </html>

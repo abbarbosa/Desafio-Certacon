@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Projeto OrganizaAi
 
-## Getting Started
+Interace desenvolvida para organização e gerenciamento de produtos usando a  **[FakeStore Api](https://fakestoreapi.com/)** 
 
-First, run the development server:
+## 🚀 Começando
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Inicialmente foi desenvolvido a identidade visual do projeto:
+
+**[Veja a identidade](https://www.figma.com/)**
+
+Depois foi feito o protótipo das telas
+* o protótipo contêm diferentes itens da versão codificada pois se trata apenas de uma pré visualização.
+
+**[Veja o protótipo](https://www.figma.com/design/eNB2VXOZdDMmzRH6XSnJBo/prot%C3%B3tipo-OrganizaA%C3%AD?node-id=0-1&t=OUpgMmzLBiI2yM5Q-1)**
+
+### 📋 Pré-requisitos
+Instalar Node.js
+
+```
+nodejs.org/pt
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 🔧 Instalação
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Para rodar o código siga esse passo a passo:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+1° git clone https://github.com/abbarbosa/projeto-organizaai.git
+```
 
-## Learn More
+```
+2° npm i 
+```
+```
+3° npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## 🛠️ Construído com
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+As ferramentas utiliazdas para o projeto foram:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+* [NextJs](https://nextjs.org/) -  framework de desenvolvimento web
+* [React](https://react.dev) - biblioteca JavaScript em SPA(Single Page  Applications)
+* [Typescript](https://www.typescriptlang.org) - linguagem fortemente tipada
+
+Além disso também foram utilizadas outras bibiliotecas:
+
+* [Lottie](lottiefiles.com) - ícones animados
+* [Recharts](https://recharts.org/en-US/) - desenvolvimento dos gráficos
+* [React-toastify](https://fkhadra.github.io/react-toastify/introduction/) - alerts nas ações do usuário
+
+## ✒️ Autor 
+
+Esse projeto foi desenvolvido por Anna Beatriz Barbosa e dividido nas etapas de:
+
+* **Identidade visual**
+* **Prototipação**
+* **Desenvolvimento** 
+
+Você também pode [ver mais](https://annabiadesign.vercel.app) dos meus projetos
+
+## 📄 Licença
+
+Todos os direitos reservados
+
+---
+Obrigada por chegar até aqui! [Veja outros repositórios](https://github.com/abbarbosa?tab=repositories) 😊
