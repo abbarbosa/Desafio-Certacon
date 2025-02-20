@@ -5,7 +5,7 @@ import { StandartTittle } from '../tittles/Index';
 import { usePathname, useRouter } from 'next/navigation';
 import { ExtraButton } from '../button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDoorOpen, faUser, faBars, faTimes, faChartSimple, faDolly } from '@fortawesome/free-solid-svg-icons';
+import { faDoorOpen,  faBars, faTimes, faChartSimple, faDolly } from '@fortawesome/free-solid-svg-icons';
 
 export default function Header() {
     const pathname = usePathname();

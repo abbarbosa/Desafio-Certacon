@@ -3,8 +3,7 @@
 import { BarGraphic } from "@/components/graphics";
 import { Title } from "@/components/tittles/Index";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react"
-
+import { useEffect } from "react";
 
 function Dashboard() {
 
@@ -19,12 +18,16 @@ function Dashboard() {
     }, [router]);
 
     return (
-        <div className="bg-primary-black min-h-screen w-[100%] flex flex-col gap-[30px]">
-            <div className="pl-[5%] flex items-start">
-                <Title className="text-complementary-white text-start">Bem vindo!</Title>
+        <div className="bg-primary-black min-h-screen w-full flex flex-col gap-[30px] px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12">
+            <div className="flex items-center justify-center w-full">
+                <Title className="text-complementary-white text-center text-xl sm:text-2xl md:text-3xl lg:text-4xl">Bem-vindo!</Title>
             </div>
-            <BarGraphic />
+
+            <div className="w-full flex justify-center sm:justify-start md:justify-center lg:justify-center xl:justify-center">
+                <BarGraphic />
+            </div>
         </div>
     )
 }
-export default (Dashboard);
+
+export default Dashboard;

@@ -99,47 +99,47 @@ export default function Produtos() {
     //função para adicionar produto
     const handleAddProduct = (e: React.FormEvent) => {
         e.preventDefault();
-
+      
         try {
-            const newProduct: ProductProps = {
-                id: new Date().getTime(),
-                title: productName,
-                price: parseFloat(productPrice),
-                description: productDescription,
-                image: productImagePreview || fundo.src,
-                category: productCategory,
-            };
-
-            const updatedProducts: ProductProps[] = [...products, newProduct];
-            setProducts(updatedProducts);
-            saveProducts(updatedProducts);
-
-            setProductName('');
-            setProductPrice('');
-            setProductDescription('');
-            setProductImageFile(null);
-            setProductImagePreview(null);
-            setProductCategory('electronic');
-            closeModalAdd();
-
-            toast.success("Produto adicionado com sucesso!");
-
+          const newProduct: ProductProps = {
+            id: new Date().getTime(),
+            title: productName,
+            price: parseFloat(productPrice),
+            description: productDescription,
+            image: productImagePreview || fundo.src,
+            category: productCategory,
+          };
+      
+          const updatedProducts: ProductProps[] = [...products, newProduct];
+          setProducts(updatedProducts);
+          saveProducts(updatedProducts);
+      
+          setProductName('');
+          setProductPrice('');
+          setProductDescription('');
+          setProductImageFile(null);
+          setProductImagePreview(null);
+          setProductCategory('electronic');
+          closeModalAdd();
+      
+          toast.success("Produto adicionado com sucesso!");
+      
         } catch (error: any) {
-            toast.error("Erro ao adicionar produto. Tente novamente.");
+          toast.error("Erro ao adicionar produto. Tente novamente.");
         }
-    };
-
+      };
+      
 
     //função para deletar produto
     const handleDeleteProduct = async () => {
         if (!productToDelete) return;
-
+    
         try {
             const updatedProducts = products.filter((product) => product.id !== productToDelete.id);
             setProducts(updatedProducts);
             saveProducts(updatedProducts);
             closeSecondModal();
-
+    
             // Exibindo o toast de sucesso
             toast.success("Produto deletado com sucesso!");
         } catch (error) {
@@ -147,14 +147,14 @@ export default function Produtos() {
             toast.error("Erro ao deletar o produto. Tente novamente.");
         }
     };
-
+    
 
     //função para atualizar produto
     const handleUpdateProduct = (e: React.FormEvent) => {
         e.preventDefault();
-
+    
         if (!productToEdit) return;
-
+    
         try {
             const updatedProduct = {
                 ...productToEdit,
@@ -164,13 +164,13 @@ export default function Produtos() {
                 image: productImagePreview || productToEdit.image,
                 category: productCategory,
             };
-
+    
             const updatedProducts = products.map((product) =>
                 product.id === productToEdit.id ? updatedProduct : product
             );
             setProducts(updatedProducts);
             saveProducts(updatedProducts);
-
+    
             setProductName('');
             setProductPrice('');
             setProductDescription('');
@@ -184,7 +184,7 @@ export default function Produtos() {
             toast.error("Erro ao atualizar produto. Tente novamente.");
         }
     };
-
+    
 
     const handleOpenUpdateModal = (product: any) => {
         setProductToEdit(product);
@@ -319,12 +319,12 @@ export default function Produtos() {
                             onChange={handleImageChange}
                         />
 
+                        {/* Campo de seleção de categoria */}
                         <select
-                            className="w-full h-[50px] rounded-[30px] pl-[10px] bg-primary-black border border-complementary-white text-complementary-white"
-                            value={selectedCategory}
-                            onChange={(e) => setSelectedCategory(e.target.value)}
+                            className="w-full h-[50px] rounded-[30px] pl-[10px] bg-primary-black border border-complementary-white text-complementary-white "
+                            value={productCategory}
+                            onChange={(e) => setProductCategory(e.target.value)}
                         >
-                            <option value="">Selecione uma categoria</option> {/* Adicionando a opção padrão */}
                             {categories.length > 0 ? (
                                 categories.map((category) => (
                                     <option key={category} value={category}>
@@ -335,7 +335,6 @@ export default function Produtos() {
                                 <option>Carregando...</option>
                             )}
                         </select>
-
                         <Button type="submit">Salvar</Button>
                     </form>
                     <ButtonLink onClick={closeModalAdd} >Cancelar</ButtonLink>
@@ -364,11 +363,11 @@ export default function Produtos() {
             <Modal isOpen={isUpdateModal} onClose={closeUpdateModal}>
                 <div className="w-full h-full items-center justify-center flex flex-col overflow-y-auto max-h-[100vh]">
                     <form
-                        className="flex flex-col gap-4 text-complementary-white w-full  p-4 font-chillax"
+                        className="flex flex-col gap-4 text-complementary-white w-full max-w-[510px] mx-auto p-4 font-chillax"
                         onSubmit={handleUpdateProduct}
                     >
                         <input
-                            className="w-full h-[75px] rounded-[30px] pl-[10px] bg-primary-black border border-complementary-white"
+                            className="w-full h-[70px] rounded-[30px] pl-[10px] bg-primary-black border border-complementary-white"
                             type="text"
                             value={productName}
                             onChange={(e) => setProductName(e.target.value)}
@@ -401,12 +400,12 @@ export default function Produtos() {
                             onChange={handleImageChange}
                         />
 
+                        {/* Campo de seleção de categoria */}
                         <select
-                            className="w-full h-[50px] rounded-[30px] pl-[10px] bg-primary-black border border-complementary-white text-complementary-white"
-                            value={selectedCategory}
-                            onChange={(e) => setSelectedCategory(e.target.value)}
+                            className="w-full h-[50px] rounded-[30px] pl-[10px] bg-primary-black border border-complementary-white text-complementary-white "
+                            value={productCategory}
+                            onChange={(e) => setProductCategory(e.target.value)}
                         >
-                            <option value="">Selecione uma categoria</option> {/* Adicionando a opção padrão */}
                             {categories.length > 0 ? (
                                 categories.map((category) => (
                                     <option key={category} value={category}>
@@ -417,7 +416,6 @@ export default function Produtos() {
                                 <option>Carregando...</option>
                             )}
                         </select>
-
 
                         <Button className="flex justify-center items-center w-full" type="submit">Salvar</Button>
                     </form>

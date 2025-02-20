@@ -16,11 +16,10 @@ export default function App() {
 
   const router = useRouter();
 
-  // Verificação se já está logado
   useEffect(() => {
     const token = localStorage.getItem("token");
 
-    // Verifica se o token é válido antes de redirecionar
+
     if (token && token !== "undefined" && token !== "null") {
       router.push("/dashboard");
     }
