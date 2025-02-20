@@ -15,7 +15,7 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 export const Button: React.FC<ButtonProps> = ({ children, onClick, className}) => {
     return (
         <div>
-            <button className={`bg-primary-red w-[510px] h-[73px] rounded-[30px] flex items-center justify-center gap-[5px] text-complementary-white text-[24px] hover:bg-[#4d1e27] font-chillax ${className}`}
+            <button className={`bg-primary-red w-full h-[70px] rounded-[30px] flex items-center justify-center gap-[5px] text-complementary-white text-[24px] hover:bg-[#4d1e27] font-chillax ${className}`}
                 onClick={onClick}
             >
                 {children}
@@ -48,7 +48,7 @@ export const ExtraButton: React.FC<ButtonProps> = ({ children, onClick, classNam
     return (
         <div>
             <button
-                className={`h-11 w-11 rounded-full border-complementary-white border text-complementary-white flex items-center justify-center hover:scale-110 transition duration-300 ${className}`}
+                className={`h-11 w-11 rounded-full bg-primary-black border-complementary-white border text-complementary-white flex items-center justify-center hover:scale-110 transition duration-300 ${className}`}
                 onClick={onClick}
             >
                 {children}

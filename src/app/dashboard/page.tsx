@@ -8,31 +8,16 @@ import { useEffect, useState } from "react"
 
 function Dashboard() {
 
-    const [fullName, setFullName] = useState<string>("");
     const router = useRouter()
 
     useEffect(() => {
         const token = localStorage.getItem("token");
-        const storedFirstName = localStorage.getItem("firstName");
-        const storedLastName = localStorage.getItem("lastName");
 
         if (!token) {
-            router.push("/"); // Redireciona para login se não houver token
-        }
-
-        // Se ambos firstName e lastName forem encontrados, combinamos eles
-        if (storedFirstName && storedLastName) {
-            setFullName(`${storedFirstName} ${storedLastName}`); // Combina o nome e sobrenome
+            router.push("/");
         }
     }, [router]);
 
-
-    useEffect(() => {
-        const token = localStorage.getItem("token");
-        if (!token) {
-            router.push("/"); // Redireciona para login se não houver token
-        }
-    }, [router]);
     return (
         <div className="bg-primary-black h-full w-[100%] flex flex-col gap-[30px]">
             <div className="pl-[5%] flex items-start">

@@ -8,6 +8,8 @@ import chevronAnimation from "../../../Assets/icons/chevron-right.json";
 import Link from "next/link";
 import { Modal } from "@/components/modal";
 import { useParams, useRouter } from "next/navigation";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 export default function ProdutoDetalhado({ params }: { params: { id: string } }) {
     const { id } = useParams();
@@ -16,40 +18,16 @@ export default function ProdutoDetalhado({ params }: { params: { id: string } })
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isSecondModal, setIsSecondModal] = useState(false);
 
-    const openModal = () => setIsModalOpen(true);
-    const closeModal = () => setIsModalOpen(false);
-
     const openSecondModal = () => setIsSecondModal(true);
     const closeSecondModal = () => setIsSecondModal(false);
 
     const [products, setProducts] = useState<any[]>([]);
-    const [productToDelete, setProductToDelete] = useState<any | null>(null);
 
-    const [productToEdit, setProductToEdit] = useState<any | null>(null);
-    const [productName, setProductName] = useState("");
-    const [productPrice, setProductPrice] = useState("");
-    const [productDescription, setProductDescription] = useState("");
-    const [productImage, setProductImage] = useState("");
+
     const [productImageFile, setProductImageFile] = useState<File | null>(null);
-    const [productCategory, setProductCategory] = useState("electronic");
     const [productImagePreview, setProductImagePreview] = useState<string | null>(null);
 
-    const [categories, setCategories] = useState<string[]>([]);
 
-    useEffect(() => {
-        // Buscar categorias da API
-        const fetchCategories = async () => {
-            try {
-                const response = await fetch("https://fakestoreapi.com/products/categories");
-                const data = await response.json();
-                setCategories(data);
-            } catch (error) {
-                console.error("Erro ao buscar categorias:", error);
-            }
-        };
-
-        fetchCategories();
-    }, []);
 
     useEffect(() => {
         const fetchParams = async () => {
@@ -155,7 +133,7 @@ export default function ProdutoDetalhado({ params }: { params: { id: string } })
                 </div>
 
                 <div className="flex items-start flex-col gap-[10px] text-center lg:text-start">
-                    <Title className="text-complementary-white">{product.title}</Title>
+                    <Title className="text-complementary-white font-bold">{product.title}</Title>
                     <StandartTittle className="w-full lg:w-[410px] h-auto lg:h-[160px] text-start">
                         {product.description}
                     </StandartTittle>
@@ -166,9 +144,9 @@ export default function ProdutoDetalhado({ params }: { params: { id: string } })
                     <div className="flex flex-col gap-5  mb-[10px]">
 
                         <ButtonLink
-                            className=" h-[70px] text-5"
+                            className=" h-[70px] text-5 gap-[10px] flex items-center"
                             onClick={openSecondModal}
-                        >
+                        > <FontAwesomeIcon icon={faTrash} />
                             Excluir produto
                         </ButtonLink>
                     </div>

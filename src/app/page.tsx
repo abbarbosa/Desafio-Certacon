@@ -14,6 +14,8 @@ export default function Home() {
 
   const router = useRouter();
 
+
+  //verificação se está logado
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -21,35 +23,35 @@ export default function Home() {
     }
   }, [router]);
 
+  //função de login
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError(''); // Limpa qualquer erro anterior
+    setError(''); 
 
-    // Aqui você pode fazer a requisição de login para uma API
     try {
       const response = await fetch('https://fakestoreapi.com/auth/login', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json', // Especifica o tipo de conteúdo como JSON
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          username: "mor_2314", // Usuário de exemplo
-          password: "83r5^_" // Senha de exemplo
+          username: "mor_2314",
+          password: "83r5^_" 
         })
       })
         .then(res => res.json())
         .then(json => {
           console.log(json);
           if (json.token) {
-            localStorage.setItem("token", json.token); // Armazena o token no localStorage
-            localStorage.setItem("name", json.name); // Armazena o nome do usuário no localStorage
-            router.push("/dashboard"); // Redireciona para a página do dashboard
+            localStorage.setItem("token", json.token);
+            localStorage.setItem("name", json.name);
+            router.push("/dashboard"); 
           }
         })
 
-        .catch(error => console.error('Erro:', error)); // Redireciona para a dashboard
+        .catch(error => console.error('Erro:', error)); 
     } catch (error: any) {
-      setError(error.message); // Exibe o erro caso haja
+      setError(error.message); 
     }
   };
 
@@ -87,7 +89,6 @@ export default function Home() {
         </Button>
       </form>
 
-      {error && <p className="text-red-500 text-center">{error}</p>} {/* Exibindo erro, se houver */}
 
       <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 text-center">
         <StandartTittle className="font-regular text-5">Não tem uma conta? </StandartTittle>

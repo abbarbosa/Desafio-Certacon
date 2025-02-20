@@ -23,18 +23,18 @@ export default function Cadastro() {
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
 
+    //função de cadastro
     const handleCadastro = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setLoading(true);
     
-        // Validação simples de campos
+
         if (!email || !password || !firstName || !lastName || !username) {
             setError("Preencha todos os campos obrigatórios.");
             setLoading(false);
             return;
         }
     
-        // Preparando os dados do formulário
         const userData = {
             email: email,
             username: username,
@@ -42,21 +42,8 @@ export default function Cadastro() {
             name: {
                 firstname: firstName,
                 lastname: lastName
-            },
-            address: {
-                street: street,
-                number: number,
-                city: city,
-                zipcode: zipCode,
-                geolocation: {
-                    lat: '', // Você pode preencher com um valor real se necessário
-                    long: '' // Você pode preencher com um valor real se necessário
-                }
-            },
-            phone: phone
+            }
         };
-    
-        // Enviando os dados para a API com o fetch
         try {
             const response = await fetch('https://fakestoreapi.com/users', {
                 method: "POST",
@@ -70,14 +57,10 @@ export default function Cadastro() {
                 const json = await response.json();
                 console.log('Cadastro realizado com sucesso:', json);
     
-                // Armazenando todos os dados do usuário no localStorage
-                localStorage.setItem("userData", JSON.stringify(userData)); // Armazenando o objeto inteiro no localStorage
+                localStorage.setItem("userData", JSON.stringify(userData)); 
     
-                // Armazenando o nome completo e o token, caso seja necessário
                 localStorage.setItem("fullName", `${firstName} ${lastName}`);
-                localStorage.setItem("token", json.token); // Supondo que a resposta tenha um token
-    
-                // Redireciona para a página de login ou outra página de sucesso
+                localStorage.setItem("token", json.token); 
                 router.push('/'); 
             } else {
                 const errorData = await response.json();

@@ -9,14 +9,13 @@ interface ChartData {
 }
 
 export const BarGraphic = () => {
-    // Defina o tipo de estado
-    const [data, setData] = useState<ChartData[]>([]);
-    const [categories, setCategories] = useState<string[]>([]);  // Estado para categorias
-    const [products, setProducts] = useState<any[]>([]); // Estado para os produtos
 
-    // Função para buscar os dados de produtos e categorias
+    const [data, setData] = useState<ChartData[]>([]);
+    const [categories, setCategories] = useState<string[]>([]);
+    const [products, setProducts] = useState<any[]>([]);
+
     useEffect(() => {
-        // Buscar categorias
+        // Busca categorias
         fetch('https://fakestoreapi.com/products/categories')
             .then((response) => response.json())
             .then((categoryData) => {
@@ -24,8 +23,8 @@ export const BarGraphic = () => {
             })
             .catch((error) => console.error('Erro ao buscar categorias:', error));
 
-        // Buscar produtos
-        fetch('https://fakestoreapi.com/products')  // Substitua pela URL da sua API
+        // Busca produtos
+        fetch('https://fakestoreapi.com/products')
             .then((response) => response.json())
             .then((productData) => {
                 setProducts(productData);
@@ -36,7 +35,7 @@ export const BarGraphic = () => {
     const processApiData = (products: any[], categories: string[]) => {
         const processedData = categories.map(category => {
             const categoryData = products.filter(item => item.category === category);
-            const totalValue = categoryData.reduce((sum, item) => sum + item.price, 0); 
+            const totalValue = categoryData.reduce((sum, item) => sum + item.price, 0);
             return { name: category, valor: totalValue };
         });
         return processedData;
@@ -67,7 +66,7 @@ export const BarGraphic = () => {
                 <PieChart>
                     <Pie data={data} dataKey="valor" nameKey="name" cx="50%" cy="50%" outerRadius={100}>
                         {data.map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill={["#8884d8", "#82ca9d", "#ffc658", "#ff8042", "#8dd1e1", "#a4de6c", "#d0ed57", "#ffc0cb" , "#333"][index % 100]} />
+                            <Cell key={`cell-${index}`} fill={["#8884d8", "#82ca9d", "#ffc658", "#ff8042", "#8dd1e1", "#a4de6c", "#d0ed57", "#ffc0cb", ][index % 10]} />
                         ))}
                     </Pie>
                     <Legend layout="horizontal" height={36} />

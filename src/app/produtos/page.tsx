@@ -7,7 +7,11 @@ import { Modal } from "@/components/modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import CustomAlert from "@/components/alerts";
 
+
+//interface com dados do produto
 export interface ProductProps {
     id: number;
     title: string;
@@ -18,6 +22,7 @@ export interface ProductProps {
 }
 
 export default function Produtos() {
+    const router = useRouter()
     const [isModalAdd, setIsModalAdd] = useState(false);
     const openModalAdd = () => setIsModalAdd(true);
     const closeModalAdd = () => setIsModalAdd(false);
@@ -42,9 +47,20 @@ export default function Produtos() {
     const [productImagePreview, setProductImagePreview] = useState<string | null>(null);
     const [productToEdit, setProductToEdit] = useState<any | null>(null);
     const [categories, setCategories] = useState<string[]>([]);
-    const [selectedCategory, setSelectedCategory] = useState<string>(""); // Estado para categoria selecionada
+    const [selectedCategory, setSelectedCategory] = useState<string>(""); 
 
-    // Carregar categorias da API
+    
+
+    // Redireciona para login se não houver token
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+
+        if (!token) {
+            router.push("/");
+        }
+    }, [router]);
+
+    // Carrega categorias da API
     useEffect(() => {
         fetch('https://fakestoreapi.com/products/categories')
             .then((res) => res.json())
@@ -80,6 +96,7 @@ export default function Produtos() {
         }
     };
 
+    //função para adicionar produto
     const handleAddProduct = (e: React.FormEvent) => {
         e.preventDefault();
 
@@ -96,7 +113,7 @@ export default function Produtos() {
         setProducts(updatedProducts);
         saveProducts(updatedProducts);
 
-        // Limpa os campos e fecha o modal
+
         setProductName('');
         setProductPrice('');
         setProductDescription('');
@@ -104,18 +121,20 @@ export default function Produtos() {
         setProductImagePreview(null);
         setProductCategory('electronic');
         closeModalAdd();
+        <CustomAlert severity="success" message="Sucesso! Produto adicionado." />
     };
 
+    //função para deletar produto
     const handleDeleteProduct = async () => {
         if (!productToDelete) return;
 
         const updatedProducts = products.filter((product) => product.id !== productToDelete.id);
         setProducts(updatedProducts);
         saveProducts(updatedProducts);
-
         closeSecondModal();
     };
 
+    //função para atualizar produto
     const handleUpdateProduct = (e: React.FormEvent) => {
         e.preventDefault();
 
@@ -136,7 +155,7 @@ export default function Produtos() {
         setProducts(updatedProducts);
         saveProducts(updatedProducts);
 
-        // Limpa os campos e fecha o modal
+
         setProductName('');
         setProductPrice('');
         setProductDescription('');
@@ -144,6 +163,7 @@ export default function Produtos() {
         setProductImagePreview(null);
         setProductCategory('electronic');
         closeUpdateModal();
+        <CustomAlert severity="success" message="Sucesso! Produto atualizado." />
     };
 
     const handleOpenUpdateModal = (product: any) => {
@@ -246,7 +266,7 @@ export default function Produtos() {
                         onSubmit={handleAddProduct}
                     >
                         <input
-                            className="w-full h-[75px] rounded-[30px] pl-[10px] bg-transparent border border-complementary-white"
+                            className="w-full h-[70px] rounded-[30px] pl-[10px] bg-primary-black border border-complementary-white"
                             type="text"
                             value={productName}
                             onChange={(e) => setProductName(e.target.value)}
@@ -255,7 +275,7 @@ export default function Produtos() {
                         />
 
                         <input
-                            className="w-full h-[75px] rounded-[30px] pl-[10px] bg-transparent border border-complementary-white"
+                            className="w-full h-[75px] rounded-[30px] pl-[10px] bg-primary-black border border-complementary-white"
                             type="number"
                             value={productPrice}
                             onChange={(e) => setProductPrice(e.target.value)}
@@ -264,7 +284,7 @@ export default function Produtos() {
                         />
 
                         <input
-                            className="w-full h-[260px] rounded-[30px] pl-[10px] bg-transparent border border-complementary-white"
+                            className="w-full h-[260px] rounded-[30px] pl-[10px] bg-primary-black border border-complementary-white"
                             type="text"
                             value={productDescription}
                             onChange={(e) => setProductDescription(e.target.value)}
@@ -273,7 +293,7 @@ export default function Produtos() {
                         />
 
                         <input
-                            className="w-full h-[75px] rounded-[30px] pl-[10px] bg-transparent border border-complementary-white"
+                            className="w-full h-[75px] rounded-[30px] pl-[10px] bg-primary-black border border-complementary-white"
                             type="file"
                             accept="image/*"
                             onChange={handleImageChange}
@@ -304,12 +324,12 @@ export default function Produtos() {
             {/* Modal de confirmação de exclusão */}
             <Modal isOpen={isSecondModal} onClose={closeSecondModal}>
                 <div className="w-full h-full items-center justify-center flex flex-col gap-5">
-                    <Title className="text-complementary-white text-center text-lg md:text-2xl">
+                    <Title className="text-complementary-white ">
                         <strong>Deletar conta?</strong>
                     </Title>
 
                     <Button
-                        className="w-[200px] h-[60px] text-lg"
+
                         onClick={handleDeleteProduct}
                     >
                         Confirmar
@@ -327,7 +347,7 @@ export default function Produtos() {
                         onSubmit={handleUpdateProduct}
                     >
                         <input
-                            className="w-full h-[75px] rounded-[30px] pl-[10px] bg-transparent border border-complementary-white"
+                            className="w-full h-[75px] rounded-[30px] pl-[10px] bg-primary-black border border-complementary-white"
                             type="text"
                             value={productName}
                             onChange={(e) => setProductName(e.target.value)}
@@ -336,7 +356,7 @@ export default function Produtos() {
                         />
 
                         <input
-                            className="w-full h-[75px] rounded-[30px] pl-[10px] bg-transparent border border-complementary-white"
+                            className="w-full h-[75px] rounded-[30px] pl-[10px] bg-primary-black border border-complementary-white"
                             type="number"
                             value={productPrice}
                             onChange={(e) => setProductPrice(e.target.value)}
@@ -345,7 +365,7 @@ export default function Produtos() {
                         />
 
                         <input
-                            className="w-full h-[260px] rounded-[30px] pl-[10px] bg-transparent border border-complementary-white"
+                            className="w-full h-[260px] rounded-[30px] pl-[10px] bg-primary-black border  border-complementary-white"
                             type="text"
                             value={productDescription}
                             onChange={(e) => setProductDescription(e.target.value)}
@@ -354,7 +374,7 @@ export default function Produtos() {
                         />
 
                         <input
-                            className="w-full h-[75px] rounded-[30px] pl-[10px] bg-transparent border border-complementary-white"
+                            className="w-full h-[75px] rounded-[30px] pl-[10px] bg-primary-black border border-complementary-white"
                             type="file"
                             accept="image/*"
                             onChange={handleImageChange}
@@ -377,7 +397,7 @@ export default function Produtos() {
                             )}
                         </select>
 
-                        <Button className="flex justify-center items-center w-full"  type="submit">Salvar</Button>
+                        <Button className="flex justify-center items-center w-full" type="submit">Salvar</Button>
                     </form>
 
                     <ButtonLink onClick={closeUpdateModal}>Cancelar</ButtonLink>

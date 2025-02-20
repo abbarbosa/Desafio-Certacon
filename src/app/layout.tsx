@@ -13,11 +13,7 @@ export default function RootLayout({
       <body
         className="vsc-initialized"
       >
-
-        {/* <Provider store={store}> */}
-          {/*conteúdo das páginas */}
           {children}
-        {/* </Provider> */}
 
       </body>
     </html>
