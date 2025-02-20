@@ -128,11 +128,14 @@ export default function ProdutoDetalhado({ params }: { params: { id: string } })
                 </div>
 
                 <div className="flex items-start flex-col gap-[10px] text-center lg:text-start">
-                    <Title className="text-complementary-white font-bold">{product.title}</Title>
+                    <div className="flex items-center justify-center gap-5">
+                        <Title className="text-complementary-white font-bold">{product.title}</Title>
+                        <StandartTittle>{product.category}</StandartTittle>
+                    </div>
                     <StandartTittle className="w-full lg:w-[410px] h-auto lg:h-[160px] text-start">
                         {product.description}
                     </StandartTittle>
-                    <StandartTittle className="w-full font-semibold text-10 text-start">
+                    <StandartTittle className="w-full text-[48px] text-start">
                         {product.price}
                     </StandartTittle>
 
