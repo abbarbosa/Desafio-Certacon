@@ -42,6 +42,7 @@ export const BarGraphic = () => {
             .catch((error) => console.error('Erro ao buscar produtos:', error));
     }, []);
 
+    
     const processApiData = (products: Product[], categories: string[]) => {
         const processedData = categories.map(category => {
             const categoryData = products.filter(item => item.category === category);
