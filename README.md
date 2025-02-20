@@ -6,7 +6,7 @@ Interace desenvolvida para organização e gerenciamento de produtos usando a  *
 
 Inicialmente foi desenvolvido a identidade visual do projeto:
 
-**[Veja a identidade](https://www.figma.com/)**
+**[Veja a identidade](https://www.behance.net/gallery/219774897/OrganizaAi-Identidade-Visual)**
 
 Depois foi feito o protótipo das telas
 * o protótipo contêm diferentes itens da versão codificada pois se trata apenas de uma pré visualização.
