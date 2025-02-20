@@ -5,20 +5,21 @@ import Link from "next/link";
 import fundo from "../Assets/bgLogin.png";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { Snackbar, Alert } from '@mui/material';
 import { StandartTittle } from "@/components/tittles/Index";
 
 export default function App() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [snackbarSeverity, setSnackbarSeverity] = useState<'success' | 'error'>('success'); 
 
   const router = useRouter();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-
 
     if (token && token !== "undefined" && token !== "null") {
       router.push("/dashboard");
@@ -32,11 +33,17 @@ export default function App() {
     const storedUserData = JSON.parse(localStorage.getItem("userData") || '{}');
 
     if (!username || !password) {
-      toast.error("Preencha todos os campos");
+      setSnackbarMessage("Preencha todos os campos");
+      setSnackbarSeverity('error');
+      setOpenSnackbar(true);
       return;
     }
+
+    // Verificando se os dados de login coincidem com os do localStorage
     if (username !== storedUserData.username || password !== storedUserData.password) {
-      toast.error("Usuário ou senha incorretos");
+      setSnackbarMessage("Usuário ou senha incorretos");
+      setSnackbarSeverity('error');
+      setOpenSnackbar(true);
       return;
     }
 
@@ -49,24 +56,41 @@ export default function App() {
         throw new Error("Erro ao obter token, tente novamente.");
       }
 
-
       localStorage.setItem("token", mockToken);
 
-      toast.success("Login realizado com sucesso!");
+      setSnackbarMessage("Login realizado com sucesso!");
+      setSnackbarSeverity('success');
+      setOpenSnackbar(true);
+
       router.push("/dashboard");
     } catch (error: any) {
-      toast.error(error.message || "Erro ao fazer login");
+      setSnackbarMessage(error.message || "Erro ao fazer login");
+      setSnackbarSeverity('error');
+      setOpenSnackbar(true);
     } finally {
-      setIsLoading(false); 
+      setIsLoading(false);
     }
+  };
+
+  const handleCloseSnackbar = () => {
+    setOpenSnackbar(false);
   };
 
   return (
     <div
       className="bg-primary-black min-h-screen flex items-center flex-col justify-center gap-[100px]"
-      style={{ backgroundImage: `url(${fundo.src})`, backgroundSize: "cover", backgroundPosition: "center" }}
+      style={{ backgroundImage: `url(./bgLogin.png)`, backgroundSize: "cover", backgroundPosition: "center" }}
     >
-      <ToastContainer />
+
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={3000}
+        onClose={handleCloseSnackbar}
+      >
+        <Alert onClose={handleCloseSnackbar} severity={snackbarSeverity} sx={{ width: '100%' }}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
 
       <img src="./logo.svg" className="h-[77px] w-full mb-8 mx-auto" alt="Logo" />
 

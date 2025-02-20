@@ -10,25 +10,20 @@ import { Modal } from "@/components/modal";
 import { useParams, useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import { toast } from "react-toastify";
+import { Snackbar, Alert } from "@mui/material";  // Importando o Snackbar e Alert do MUI
 
 export default function ProdutoDetalhado({ params }: { params: { id: string } }) {
     const { id } = useParams();
     const [product, setProduct] = useState<any | null>(null);
-
-    const [isModalOpen, setIsModalOpen] = useState(false);
     const [isSecondModal, setIsSecondModal] = useState(false);
+    const [openSnackbar, setOpenSnackbar] = useState(false);  // Estado para o Snackbar
+    const [snackbarMessage, setSnackbarMessage] = useState("");  // Mensagem do Snackbar
+    const [snackbarSeverity, setSnackbarSeverity] = useState<"success" | "error">("success");  // Tipo de Snackbar
 
     const openSecondModal = () => setIsSecondModal(true);
     const closeSecondModal = () => setIsSecondModal(false);
 
     const [products, setProducts] = useState<any[]>([]);
-
-
-    const [productImageFile, setProductImageFile] = useState<File | null>(null);
-    const [productImagePreview, setProductImagePreview] = useState<string | null>(null);
-
-
 
     useEffect(() => {
         const fetchParams = async () => {
@@ -62,15 +57,14 @@ export default function ProdutoDetalhado({ params }: { params: { id: string } })
         );
     }
 
+    // Função de deletar produto
     const handleDeleteProduct = async () => {
         if (!product) return;
 
         try {
-            // Pega os produtos armazenados no localStorage
             const storedProducts = localStorage.getItem("products");
             if (storedProducts) {
                 const products = JSON.parse(storedProducts);
-
 
                 const updatedProducts = products.filter((p: any) => p.id !== product.id);
 
@@ -78,7 +72,10 @@ export default function ProdutoDetalhado({ params }: { params: { id: string } })
 
                 closeSecondModal();
 
-                toast.success("Produto deletado com sucesso!");
+                // Exibe o Snackbar de sucesso
+                setSnackbarMessage("Produto deletado com sucesso!");
+                setSnackbarSeverity("success");
+                setOpenSnackbar(true);
 
                 setTimeout(() => {
                     window.location.href = '/produtos';
@@ -86,11 +83,12 @@ export default function ProdutoDetalhado({ params }: { params: { id: string } })
             }
 
         } catch (error) {
-            toast.error("Erro ao deletar o produto. Tente novamente.");
+            // Exibe o Snackbar de erro
+            setSnackbarMessage("Erro ao deletar o produto. Tente novamente.");
+            setSnackbarSeverity("error");
+            setOpenSnackbar(true);
         }
     };
-
-
 
     const saveProducts = (updatedProducts: any[]) => {
         localStorage.setItem("products", JSON.stringify(updatedProducts));
@@ -140,7 +138,6 @@ export default function ProdutoDetalhado({ params }: { params: { id: string } })
                     </StandartTittle>
 
                     <div className="flex flex-col gap-5  mb-[10px]">
-
                         <ButtonLink
                             className=" h-[70px] text-5 gap-[10px] flex items-center"
                             onClick={openSecondModal}
@@ -150,7 +147,6 @@ export default function ProdutoDetalhado({ params }: { params: { id: string } })
                     </div>
                 </div>
             </div>
-
 
             {/* Modal para excluir produto */}
             <Modal isOpen={isSecondModal} onClose={closeSecondModal}>
@@ -176,6 +172,17 @@ export default function ProdutoDetalhado({ params }: { params: { id: string } })
                     </div>
                 </div>
             </Modal>
+
+            {/* Snackbar do MUI */}
+            <Snackbar
+                open={openSnackbar}
+                autoHideDuration={6000}
+                onClose={() => setOpenSnackbar(false)}
+            >
+                <Alert onClose={() => setOpenSnackbar(false)} severity={snackbarSeverity} sx={{ width: '100%' }}>
+                    {snackbarMessage}
+                </Alert>
+            </Snackbar>
         </div>
     );
 }

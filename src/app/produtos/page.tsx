@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { toast } from "react-toastify";
+import { Alert, Snackbar, Grid } from "@mui/material";
 
 
 //interface com dados do produto
@@ -49,6 +49,13 @@ export default function Produtos() {
     const [categories, setCategories] = useState<string[]>([]);
     const [selectedCategory, setSelectedCategory] = useState<string>("");
 
+    const [openSnackbar, setOpenSnackbar] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState("");
+    const [snackbarSeverity, setSnackbarSeverity] = useState<"success" | "error">("success");
+
+    const handleSnackbarClose = () => {
+        setOpenSnackbar(false);
+    };
 
 
     // Redireciona para login se não houver token
@@ -99,62 +106,71 @@ export default function Produtos() {
     //função para adicionar produto
     const handleAddProduct = (e: React.FormEvent) => {
         e.preventDefault();
-      
+
         try {
-          const newProduct: ProductProps = {
-            id: new Date().getTime(),
-            title: productName,
-            price: parseFloat(productPrice),
-            description: productDescription,
-            image: productImagePreview || fundo.src,
-            category: productCategory,
-          };
-      
-          const updatedProducts: ProductProps[] = [...products, newProduct];
-          setProducts(updatedProducts);
-          saveProducts(updatedProducts);
-      
-          setProductName('');
-          setProductPrice('');
-          setProductDescription('');
-          setProductImageFile(null);
-          setProductImagePreview(null);
-          setProductCategory('electronic');
-          closeModalAdd();
-      
-          toast.success("Produto adicionado com sucesso!");
-      
+            const newProduct: ProductProps = {
+                id: new Date().getTime(),
+                title: productName,
+                price: parseFloat(productPrice),
+                description: productDescription,
+                image: productImagePreview || fundo.src,
+                category: productCategory,
+            };
+
+            const updatedProducts: ProductProps[] = [...products, newProduct];
+            setProducts(updatedProducts);
+            saveProducts(updatedProducts);
+
+            setProductName('');
+            setProductPrice('');
+            setProductDescription('');
+            setProductImageFile(null);
+            setProductImagePreview(null);
+            setProductCategory('electronic');
+            closeModalAdd();
+
+            setSnackbarMessage("Produto adicionado com sucesso!");
+            setSnackbarSeverity("success");
+            setOpenSnackbar(true);
+
+
         } catch (error: any) {
-          toast.error("Erro ao adicionar produto. Tente novamente.");
+            setSnackbarMessage("Erro ao adicionar produto. Tente novamente.");
+            setSnackbarSeverity("error");
+            setOpenSnackbar(true);
         }
-      };
-      
+    };
+
 
     //função para deletar produto
     const handleDeleteProduct = async () => {
         if (!productToDelete) return;
-    
+
         try {
             const updatedProducts = products.filter((product) => product.id !== productToDelete.id);
             setProducts(updatedProducts);
             saveProducts(updatedProducts);
             closeSecondModal();
-    
+
             // Exibindo o toast de sucesso
-            toast.success("Produto deletado com sucesso!");
+            setSnackbarMessage("Produto deletado com sucesso!");
+            setSnackbarSeverity("success");
+            setOpenSnackbar(true);
         } catch (error) {
             // Exibindo o toast de erro
-            toast.error("Erro ao deletar o produto. Tente novamente.");
+            setSnackbarMessage("Erro ao deletar o produto. Tente novamente.");
+            setSnackbarSeverity("error");
+            setOpenSnackbar(true);
         }
     };
-    
+
 
     //função para atualizar produto
     const handleUpdateProduct = (e: React.FormEvent) => {
         e.preventDefault();
-    
+
         if (!productToEdit) return;
-    
+
         try {
             const updatedProduct = {
                 ...productToEdit,
@@ -164,13 +180,13 @@ export default function Produtos() {
                 image: productImagePreview || productToEdit.image,
                 category: productCategory,
             };
-    
+
             const updatedProducts = products.map((product) =>
                 product.id === productToEdit.id ? updatedProduct : product
             );
             setProducts(updatedProducts);
             saveProducts(updatedProducts);
-    
+
             setProductName('');
             setProductPrice('');
             setProductDescription('');
@@ -179,12 +195,16 @@ export default function Produtos() {
             setProductCategory('electronic');
             closeUpdateModal();
 
-            toast.success("Produto atualizado com sucesso!");
+            setSnackbarMessage("Produto atualizado com sucesso!");
+            setSnackbarSeverity("success");
+            setOpenSnackbar(true);
         } catch (error: any) {
-            toast.error("Erro ao atualizar produto. Tente novamente.");
+            setSnackbarMessage("Erro ao atualizar produto. Tente novamente.");
+            setSnackbarSeverity("error");
+            setOpenSnackbar(true);
         }
     };
-    
+
 
     const handleOpenUpdateModal = (product: any) => {
         setProductToEdit(product);
@@ -230,53 +250,66 @@ export default function Produtos() {
 
 
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 pt-5 px-5">
+            <Grid container spacing={3} justifyContent="center" pt={5} px={5}>
+                <Snackbar
+                    open={openSnackbar}
+                    autoHideDuration={6000}
+                    onClose={handleSnackbarClose}
+                >
+                    <Alert onClose={handleSnackbarClose} severity={snackbarSeverity} sx={{ width: "100%" }}>
+                        {snackbarMessage}
+                    </Alert>
+                </Snackbar>
+
                 {filteredProducts.length > 0 ? filteredProducts.map((product) => (
-                    <div
-                        key={product.id}
-                        className="flex flex-col gap-4 text-complementary-white w-full max-w-[510px] mx-auto p-4 font-chillax 
-                        bg-primary-black rounded-[30px] max-h-[80vh] overflow-y-auto"
-                        style={{
-                            backgroundImage: `url(${product.image})`,
-                            backgroundSize: "cover",
-                            backgroundPosition: "center",
-                        }}
-                    >
-                        <div className="flex items-center justify-between px-[10px]">
-                            <div className="flex flex-col items-start pl-[30px] pt-[15px]">
-                                <StandartTittle className="text-complementary-white">
-                                    <strong>R${product.price}</strong>
-                                </StandartTittle>
-                                <StandartTittle className="text-complementary-white">
-                                    {product.title.slice(0, 10)}{product.title.length > 10 ? '...' : ''}
-                                </StandartTittle>
+                    <Grid item xs={12} sm={6} md={4} lg={3} key={product.id}>
+                        <div
+                            className="flex flex-col gap-4 text-complementary-white w-full max-w-[510px] mx-auto p-4 font-chillax 
+              bg-primary-black rounded-[30px] max-h-[80vh] overflow-y-auto"
+                            style={{
+                                backgroundImage: `url(${product.image})`,
+                                backgroundSize: "cover",
+                                backgroundPosition: "center",
+                            }}
+                        >
+                            <div className="flex items-center justify-between px-[10px]">
+                                <div className="flex flex-col items-start pl-[30px] pt-[15px]">
+                                    <StandartTittle className="text-complementary-white">
+                                        <strong>R${product.price}</strong>
+                                    </StandartTittle>
+                                    <StandartTittle className="text-complementary-white">
+                                        {product.title.slice(0, 10)}{product.title.length > 10 ? '...' : ''}
+                                    </StandartTittle>
+                                </div>
+
+                                <div className="flex items-center">
+                                    <Link href={`/produtos/${product.id}`}>
+                                        <ExtraButton className="w-[44px] h-[44px] rounded-full bg-white-400 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-80 border-transparent">
+                                            <FontAwesomeIcon icon={faPlus} />
+                                        </ExtraButton>
+                                    </Link>
+                                </div>
                             </div>
 
-                            <div className="flex items-center">
-                                <Link href={`/produtos/${product.id}`}>
-                                    <ExtraButton className="w-[44px] h-[44px] rounded-full bg-white-400 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-80 border-transparent">
-                                        <FontAwesomeIcon icon={faPlus} />
-                                    </ExtraButton>
-                                </Link>
+                            <div className="flex items-end justify-end pt-[100px] pr-[20px] gap-1">
+                                <ExtraButton onClick={() => handleOpenUpdateModal(product)} className="w-[44px] h-[44px] rounded-full bg-white-400 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-80">
+                                    <FontAwesomeIcon icon={faPen} />
+                                </ExtraButton>
+                                <ExtraButton onClick={() => {
+                                    setProductToDelete(product);
+                                    openSecondModal();
+                                }} className="w-[44px] h-[44px] rounded-full bg-white-400 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-80">
+                                    <FontAwesomeIcon icon={faTrash} />
+                                </ExtraButton>
                             </div>
                         </div>
-
-                        <div className="flex items-end justify-end pt-[100px] pr-[20px] gap-1">
-                            <ExtraButton onClick={() => handleOpenUpdateModal(product)} className="w-[44px] h-[44px] rounded-full bg-white-400 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-80">
-                                <FontAwesomeIcon icon={faPen} />
-                            </ExtraButton>
-                            <ExtraButton onClick={() => {
-                                setProductToDelete(product);
-                                openSecondModal();
-                            }} className="w-[44px] h-[44px] rounded-full bg-white-400 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-80">
-                                <FontAwesomeIcon icon={faTrash} />
-                            </ExtraButton>
-                        </div>
-                    </div>
+                    </Grid>
                 )) : (
-                    <p className="text-white">Nenhum produto encontrado.</p>
+                    <Grid item xs={12}>
+                        <p className="text-white">Nenhum produto encontrado.</p>
+                    </Grid>
                 )}
-            </div>
+            </Grid>
 
             {/* Modal para adicionar produto */}
             <Modal isOpen={isModalAdd} onClose={closeModalAdd}>

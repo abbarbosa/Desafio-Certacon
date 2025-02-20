@@ -5,7 +5,8 @@ import Link from "next/link";
 import fundo from "../../Assets/bgLogin.png";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { toast } from "react-toastify";
+import { Snackbar, Alert } from "@mui/material";
+import axios from 'axios';
 
 export default function Cadastro() {
   const router = useRouter();
@@ -18,6 +19,15 @@ export default function Cadastro() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [snackbarSeverity, setSnackbarSeverity] = useState<'success' | 'error'>('success');
+
+  const isValidEmail = (email: string) => {
+    const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return re.test(email);
+  };
+
   // Função de cadastro 
   const handleCadastro = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -25,6 +35,14 @@ export default function Cadastro() {
 
     if (!email || !password || !firstName || !lastName || !username) {
       setError("Preencha todos os campos obrigatórios.");
+      setLoading(false);
+      return;
+    }
+
+    if (!isValidEmail(email)) {
+      setSnackbarMessage("Por favor, insira um e-mail válido.");
+      setSnackbarSeverity('error');
+      setOpenSnackbar(true);
       setLoading(false);
       return;
     }
@@ -40,45 +58,64 @@ export default function Cadastro() {
     };
 
     try {
-      const response = await fetch('https://fakestoreapi.com/users', {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(userData)
-      });
+      const response = await axios.post('https://fakestoreapi.com/users', userData);
 
-      if (response.ok) {
-        const json = await response.json();
+      if (response.status === 200) {
+        const json = response.data;
         console.log('Cadastro realizado com sucesso:', json);
 
         if (json.id) {
           localStorage.setItem("userData", JSON.stringify(userData));
           localStorage.setItem("fullName", `${firstName} ${lastName}`);
 
-          toast.success("Cadastro realizado com sucesso!");
-          router.push('/'); 
+          setSnackbarMessage("Cadastro realizado com sucesso!");
+          setSnackbarSeverity('success');
+          setOpenSnackbar(true);
+
+          router.push('/');
         } else {
           throw new Error("Erro inesperado no cadastro.");
         }
       } else {
-        const errorData = await response.json();
-        console.error('Erro ao cadastrar:', errorData);
-        setError('Erro ao realizar cadastro. Tente novamente.');
+        setSnackbarMessage('Erro ao realizar cadastro. Tente novamente.');
+        setSnackbarSeverity('error');
+        setOpenSnackbar(true);
       }
-    } catch (error) {
-      console.error('Erro ao enviar dados:', error);
-      setError('Erro ao realizar cadastro. Tente novamente.');
+    } catch (error: any) {
+      if (error.response) {
+        console.error('Erro ao cadastrar:', error.response.data);
+        setSnackbarMessage(error.response.data?.message || 'Erro ao realizar cadastro. Tente novamente.');
+        setSnackbarSeverity('error');
+        setOpenSnackbar(true);
+      } else {
+        console.error('Erro de rede ou servidor:', error);
+        setSnackbarMessage('Erro ao realizar cadastro. Tente novamente.');
+        setSnackbarSeverity('error');
+        setOpenSnackbar(true);
+      }
     } finally {
       setLoading(false);
     }
-};
+  };
 
+  const handleCloseSnackbar = () => {
+    setOpenSnackbar(false);
+  };
+
+  <Snackbar
+    open={openSnackbar}
+    autoHideDuration={3000}
+    onClose={handleCloseSnackbar}
+  >
+    <Alert onClose={handleCloseSnackbar} severity={snackbarSeverity} sx={{ width: '100%' }}>
+      {snackbarMessage}
+    </Alert>
+  </Snackbar>
 
   return (
     <div
       className="bg-primary-black min-h-screen flex items-center justify-center px-4"
-      style={{ backgroundImage: `url(${fundo.src})`, backgroundSize: "cover", backgroundPosition: "center" }}
+      style={{ backgroundImage: `url(./bgLogin.png)`, backgroundSize: "cover", backgroundPosition: "center" }}
     >
       <div className="w-full max-w-[800px] bg-opacity-70 rounded-[30px] p-8 backdrop-blur-md">
         <img src="./logo.svg" className="h-[77px] w-full mb-8 mx-auto" alt="Logo" />
