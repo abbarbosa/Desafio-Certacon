@@ -122,7 +122,7 @@ export const BarGraphic = () => {
         </Pie>
         <Legend
             layout="horizontal"
-            align="center"
+            align="center" 
             verticalAlign="bottom"
             wrapperStyle={{ marginTop: 50 }}
         />
